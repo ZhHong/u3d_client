@@ -1,0 +1,39 @@
+.package {
+	type 0 : integer
+	session 1 : integer
+}
+
+foobar 1 {
+	request {
+		what 0 : string
+	}
+	response {
+		ok 0 : boolean
+	}
+}
+
+foo 2 {
+	response {
+		ok 0 : boolean
+	}
+}
+
+bar 3 {}
+
+blackhole 4 {
+	request {}
+}
+
+userinfo 5 {
+	request {}
+	response{ 
+		ok 0 : integer
+		uid 1 : integer
+		rolename 2 : string
+		choserole 3 : integer
+		level 4 : integer
+		exp 5 : integer
+		gold 6 : integer
+	}
+}
+
