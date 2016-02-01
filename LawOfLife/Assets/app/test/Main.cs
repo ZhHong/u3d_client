@@ -2,17 +2,17 @@
 using System.Collections;
 using System.IO;
 using System;
-
 public class Main : MonoBehaviour {
 	private Client mClient = null;
 	private string mText = "";
     private string mText2 = "";
 
 	void Start () {
-		new TestUnit ().Run ();
-		new Test ().Run ();
-		new TestAll ().Run ();
+		//new TestUnit ().Run ();
+		//new Test ().Run ();
+		//new TestAll ().Run ();
 		new TestRpc ().Run ();
+		//new TestPackUnPack ().run ();
 	}
 
 	void OnGUI () {

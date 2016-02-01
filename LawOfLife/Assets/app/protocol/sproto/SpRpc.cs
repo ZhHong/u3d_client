@@ -30,7 +30,7 @@ public class SpRpcResult {
 		Arg = a;
     }
 }
-
+//class rpc call
 public class SpRpc {
     private SpTypeManager mHostTypeManager;
     private SpTypeManager mAttachTypeManager;
