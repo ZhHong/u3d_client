@@ -31,6 +31,23 @@ public class Client {
 				what 0 : string
 				value 1 : string
 			}
+        
+        userinfo 4 {
+            request{
+                who 0 : integer
+            }
+            response{
+                ok 0 : integer
+                uid 1 : integer
+                uname 2 : string
+                sex 3 : integer
+                level 4 : integer
+                exp 5 : integer
+                gold 6 : integer
+            }
+        }
+        
+        
 		}";
 
     private string s2c = @"
