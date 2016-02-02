@@ -31,8 +31,9 @@ public class Client {
 				what 0 : string
 				value 1 : string
 			}
-        
-        userinfo 4 {
+        quit 4 {
+		}
+        userinfo 5 {
             request{
                 who 0 : integer
             }
@@ -65,11 +66,26 @@ public class Client {
 	private int mRecvOffset = 0;
 	private int mSession = 0;
 	private SpRpc mRpc;
+	public bool isConnect =false;
+
+	private string serverhost="192.168.1.36";
+	private int serverport=8888;
+
+	public void connect(){
+		IPAddress ip = IPAddress.Parse (serverhost);
+		try{
+			Util.Log("begin connect Server ip "+serverhost+":"+serverport+".......");
+			mSocket.Connect(new IPEndPoint(ip, serverport));
+			isConnect =true;
+		}catch(Exception exp){
+			Util.Log ("cann't connect Server,please try again.....");
+		}
+		if (isConnect) {
+			Run ();
+		}
+	}
 
 	public void Run () {
-        IPAddress ip = IPAddress.Parse ("192.168.1.4");
-		mSocket.Connect(new IPEndPoint(ip, 8888));
-
         mRpc = SpRpc.Create (s2c, "package");
         mRpc.Attach (c2s);
 
@@ -141,6 +157,11 @@ public class Client {
     // send sproto type get
 	public void SendGet (string str) {
 		Send ("get", new SpObject (SpObject.ArgType.Table, "what", str));
+	}
+
+	//send sproto type userinfo
+	public void SendUserInfo(int who){
+		Send ("userinfo",new SpObject(SpObject.ArgType.Table,"who",who));
 	}
 
 }
