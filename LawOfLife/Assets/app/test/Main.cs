@@ -12,7 +12,7 @@ public class Main : MonoBehaviour {
 		//new TestUnit ().Run ();
 		//new Test ().Run ();
 		//new TestAll ().Run ();
-		//new TestRpc ().Run ();
+		new TestRpc ().Run ();
 		//new TestPackUnPack ().run ();
 	}
 
@@ -27,7 +27,10 @@ public class Main : MonoBehaviour {
 			GUI.enabled = false;
 		}
 		if (GUI.Button (new Rect (10, 10, 100, 100), "connect")){
-			if(!mClient.isConnect){
+			if(mClient == null || !mClient.isConnect){
+				if (mClient ==  null){
+					mClient = new Client ();
+				}
 				mClient.connect();
 			}
 		}
@@ -47,7 +50,7 @@ public class Main : MonoBehaviour {
 			//GUI.enabled = false;
             if (GUI.Button(new Rect(330, 50, 80, 40), "Set")) {
 				if (mClient.isConnect) {
-					mClient.SendGet(mText2);
+					mClient.SendSet(mText2,mText2);
 					mText2 = "";
 				}
             }

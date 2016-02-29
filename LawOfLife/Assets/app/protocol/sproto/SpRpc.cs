@@ -64,9 +64,16 @@ public class SpRpc {
 		encode_stream.Position = 0;
 		return SpPacker.Pack (encode_stream);
     }
-	
+
 	public bool Request (string proto, SpObject args, int session, SpStream stream) {
+		Util.Log ("requst input===================================");
+		Util.Log ("proto======================="+proto);
+		Util.DumpObject (args);
+		Util.DumpStream (stream);
 		SpStream encode_stream = EncodeRequest (proto, args, session);
+		Util.Log ("dump encode stream===============================");
+		Util.DumpStream (encode_stream);
+
 		encode_stream.Position = 0;
 		return SpPacker.Pack (encode_stream, stream);
 	}

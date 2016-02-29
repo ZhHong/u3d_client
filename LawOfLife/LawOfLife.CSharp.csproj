@@ -104,6 +104,7 @@
     <Compile Include="Assets\app\service\ServerCore.cs" />
     <Compile Include="Assets\app\test\Benchmark.cs" />
     <Compile Include="Assets\app\test\Client.cs" />
+    <Compile Include="Assets\app\test\DES.cs" />
     <Compile Include="Assets\app\test\Main.cs" />
     <Compile Include="Assets\app\test\Test.cs" />
     <Compile Include="Assets\app\test\TestAll.cs" />

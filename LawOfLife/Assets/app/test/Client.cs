@@ -31,22 +31,35 @@ public class Client {
 				what 0 : string
 				value 1 : string
 			}
-        quit 4 {
+        quit 5 {
 		}
-        userinfo 5 {
+        userinfo 4 {
             request{
                 who 0 : integer
             }
             response{
-                ok 0 : integer
-                uid 1 : integer
-                uname 2 : string
-                sex 3 : integer
-                level 4 : integer
-                exp 5 : integer
-                gold 6 : integer
+                uid 0 : integer
+				uname 1 : string
+				sex 2 : integer
+				level 3 : integer
+				exp 4 : integer
+				gold 5 : intege
             }
         }
+		
+		createuserinfo 6{
+			request{
+				rolename 0 : string
+			}
+			response{
+				uid 0 : integer
+				uname 1 : string
+				sex 2 : integer
+				level 3 : integer
+				exp 4 : integer
+				gold 5 : intege
+			}
+		}
         
         
 		}";
@@ -68,8 +81,8 @@ public class Client {
 	private SpRpc mRpc;
 	public bool isConnect =false;
 
-	private string serverhost="192.168.1.36";
-	private int serverport=8888;
+	private string serverhost="192.168.1.4";
+	private int serverport=8101;
 
 	public void connect(){
 		IPAddress ip = IPAddress.Parse (serverhost);
@@ -148,6 +161,9 @@ public class Client {
 			Util.DumpObject (args);
 
 		mSendStream.Write ((short)0);
+		Util.Log ("proto=========="+proto);
+		Util.DumpObject (args);
+		Util.DumpStream (mSendStream);
 		mRpc.Request (proto, args, mSession, mSendStream);
 		int len = mSendStream.Length - 2;
 		mSendStream.Buffer[0] = (byte)((len >> 8) & 0xff);
@@ -156,12 +172,18 @@ public class Client {
 	}
     // send sproto type get
 	public void SendGet (string str) {
+		Util.Log ("send requset get =============what=="+str);
 		Send ("get", new SpObject (SpObject.ArgType.Table, "what", str));
 	}
 
 	//send sproto type userinfo
 	public void SendUserInfo(int who){
+		Util.Log ("send requset userinfo==========who="+who);
 		Send ("userinfo",new SpObject(SpObject.ArgType.Table,"who",who));
 	}
-
+	//send sproto type set
+	public void SendSet(string what, string value){
+		Util.Log ("send request get==========what="+what+"======value="+value);
+		Send ("set", new SpObject(SpObject.ArgType.Table,"what",what,"value",value));
+	}
 }

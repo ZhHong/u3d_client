@@ -2,23 +2,11 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
-using app.protocol;
 using Plugins.LocalData_Trans;
-using app.network;
 namespace app.manager
 {
     public sealed class GameWorld
     {
-        public void OnApplicationQuit()
-        {
-            //app close clean something
-            lflnet.closeConnection();
-        }
-
-        ~GameWorld() {
-            OnApplicationQuit();
-        }
-
         private const int SUCCESS_STEP = 4;
 
         public string nextloadScene;
@@ -27,14 +15,12 @@ namespace app.manager
         //config server info
         private LitJson.JsonData serverInfo;
 
-        private LFL_NetWork lflnet;
 
         private GameWorld()
         {
             var action = initGameWorld();
-            if (action != (int)ErrorData.ACTION_SUCCESS)
-            {
-                Debug.Log("PRINT ERROR DATA" + ErrorData.ACTIVITY_CONDITION_NO_ENOUGH);
+            if (action != 1){
+                Debug.Log(" init game world field============");
             }
         }
         private int initGameWorld()
@@ -111,8 +97,6 @@ namespace app.manager
 
         private int initManager(int _init_s)
         {
-            //LFL_NetWork lflnet = new LFL_NetWork ();
-            //lflnet.connectServer ();
             return _init_s;
         }
 
@@ -132,8 +116,6 @@ namespace app.manager
 
         public void initNetWork()
         {
-            lflnet = LFL_NetWork.getInstance();
-            lflnet.connectServer();
         }
 
     }
