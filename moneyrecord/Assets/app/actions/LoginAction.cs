@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using app.dao;
+using app.manager;
 
 public class LoginAction : MonoBehaviour {
 
     private static string _userName = "";
     private static string _password = "";
+	private GameWorld gameworld = null;
+
+	void Start(){
+		Debug.Log ("on login ui start=================");
+		if (gameworld == null) {
+			gameworld = GameWorld.getInstance ();
+		}
+	}
     public void onLoginClick()
     {
         //check user

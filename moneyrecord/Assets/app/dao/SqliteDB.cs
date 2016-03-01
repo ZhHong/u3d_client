@@ -17,13 +17,18 @@ namespace app.dao
 
         private static SqliteDB instance = null;
 
-        private SqliteDB() { }
+		private SqliteDB( string db_file) {
+			//init sql database
+			OpenDB(db_file);
+			//run database create table and update config
 
-        public static SqliteDB getInstance()
+		}
+
+		public static SqliteDB getInstance(string db_file)
         {
             if(instance == null)
             {
-                instance = new SqliteDB();
+				instance = new SqliteDB(db_file);
             }
             return instance;
         }
