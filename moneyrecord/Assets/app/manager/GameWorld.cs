@@ -12,12 +12,15 @@ namespace app.manager
         private const int SUCCESS_STEP = 4;
 
         public string nextloadScene;
+
         private static GameWorld instance;
         private int init_step = 0;
         //config server info
         private LitJson.JsonData serverInfo;
 
-		private SqliteDB sqldb= null;
+		private static SqliteDB sqldb= null;
+
+        private string[] sqlStatement = { };
 
 
         private GameWorld()
@@ -47,7 +50,10 @@ namespace app.manager
 
 		public static void GameWorldDestroy()
 		{
-			//destroy the game world
+            //destroy the game world
+            if (sqldb != null) {
+                sqldb.CloseSqlConnection();
+            }
 		}
 
         public void loadSceneWithLoading(string _nextscene)
@@ -60,6 +66,12 @@ namespace app.manager
         {
             nextloadScene = _nextscene;
             SceneManager.LoadScene(_nextscene);
+        }
+
+        public int CheckUserLogin(string username, string password)
+        {
+            sqldb.CreateUser(username, password);
+            return sqldb.CheckUserLogin(username, password);
         }
 
         private int initConfig(int _init_s)
@@ -99,6 +111,16 @@ namespace app.manager
             LitJson.JsonData ss = config_js["server1"];
             Debug.Log(ss["port"]);
             Debug.Log(ss["host"]);
+
+            string dbInitPath = Application.dataPath + Utils.GLOBAL_DBINIT_PATH;
+            string getDbInit = LocalData_Trans.GetData(dbInitPath,false);
+
+            Debug.Log(" get init data base str============"+getDbInit);
+
+            sqlStatement = getDbInit.Split('#');
+            for (int i=0;i< sqlStatement.Length;i++) {
+                Debug.Log("sql statement=============="+ sqlStatement[i]);
+            }
             initConfigInfo(config_js);
 			_init_s += 1;
             return _init_s;
@@ -120,8 +142,8 @@ namespace app.manager
 		{
 			if (sqldb == null) {
 				//get db file location
-				string db_file_location ="";
-				sqldb = SqliteDB.getInstance (db_file_location);
+				string db_file_location ="Data Source = "+Application.dataPath+Utils.GLOBAL_DB_FILE_PATH;
+				sqldb = SqliteDB.getInstance (db_file_location, sqlStatement);
 			}
 			_init_s += 1;
 			return _init_s;

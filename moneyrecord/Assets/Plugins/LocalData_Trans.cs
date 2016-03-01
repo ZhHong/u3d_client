@@ -41,9 +41,12 @@ namespace Plugins.LocalData_Trans{
 			streamwriter.Close ();
 			Debug.Log ("  set data end=============================="+toSave);
 		}
-		public static string GetData(string fileName){
+		public static string GetData(string fileName ,bool crypto = true){
 			StreamReader streamreader = File.OpenText (fileName);
 			string data = streamreader.ReadToEnd ();
+            if (!crypto) {
+                return data;
+            }
 			//decrypro
 			data=Decrypto(data,sckey);
 			Debug.Log ("decode string======="+data);

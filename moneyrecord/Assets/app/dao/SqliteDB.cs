@@ -8,7 +8,6 @@ namespace app.dao
 {
     public class SqliteDB
     {
-
         private SqliteConnection dbConnection;
 
         private SqliteCommand dbCommand;
@@ -17,18 +16,23 @@ namespace app.dao
 
         private static SqliteDB instance = null;
 
-		private SqliteDB( string db_file) {
+		private SqliteDB( string db_file,string[] sqlstatement) {
 			//init sql database
 			OpenDB(db_file);
-			//run database create table and update config
+            //run database create table and update config
+            for (int i=0;i<sqlstatement.Length;i++) {
+                reader= ExecuteQuery(sqlstatement[i]);
+                int affect_rows=reader.RecordsAffected;
+                Debug.Log("=============affect rows=========="+affect_rows);
+            }
 
 		}
 
-		public static SqliteDB getInstance(string db_file)
+		public static SqliteDB getInstance(string db_file,string[] sqlstatement)
         {
             if(instance == null)
             {
-				instance = new SqliteDB(db_file);
+				instance = new SqliteDB(db_file, sqlstatement);
             }
             return instance;
         }
@@ -77,51 +81,42 @@ namespace app.dao
         public SqliteDataReader ExecuteQuery(string sqlQuery)
         {
             //do sql
+            reader = null;
             dbCommand = dbConnection.CreateCommand();
             dbCommand.CommandText = sqlQuery;
             reader = dbCommand.ExecuteReader();
             return reader;
         }
 
-        public SqliteDataReader InsertData(string tableName, string[] values)
+        public int CheckUserLogin(string username, string password)
         {
-            //insert data
-            string query = "insert into " + tableName + " values(" + values[0];
-            for (int i = 1; i < values.Length; i++)
+            string sql = "select password,uid,reg_time from user_info where username = '" + username+"'";
+            reader=ExecuteQuery(sql);
+            if (reader.HasRows)
             {
-                query += ", " + values[i];
+                string cryptopassword=reader.GetString(0);
+                int uid = reader.GetInt16(1);
+                int reg_time = reader.GetInt16(2);
+
+                Debug.Log("sql result===========cryptopassword="+cryptopassword+"==uid="+uid+"===reg_time=="+reg_time);
+
             }
-            query += ")";
-            return ExecuteQuery(query);
+            return 1;
         }
 
-        public SqliteDataReader UpdateData(string tableName, string[] cols, string[] colvalues, string select_key, string select_value)
+        public int CreateUser(string username, string password)
         {
-            string query = "update " + tableName + " set " + cols[0] + " = " + colvalues[0];
-            for (int i = 1; i < colvalues.Length; i++)
+            string sql = "select password,uid,reg_time from user_info where username = '" + username+"'";
+            reader = ExecuteQuery(sql);
+            if (!reader.HasRows)
             {
-                query += ", " + cols[i] + " = " + colvalues[i];
+                //uid,username,password,reg_time
+                int reg_time = utils.Utils.GetNowTime();
+                sql = "insert into user_info values(null,'" + username + "','" + password + "'," + reg_time + ")";
+                reader = ExecuteQuery(sql);
+                return reader.RecordsAffected;
             }
-            query += " where " + select_key + " = " + select_value;
-            return ExecuteQuery(query);
-        }
-
-        public SqliteDataReader UpdateTable()
-        {
-            string query = "";
-            return ExecuteQuery(query);
-        }
-
-        public SqliteDataReader DeleteTables()
-        {
-            string query = "";
-            return ExecuteQuery(query);
-        }
-
-        public SqliteDataReader CreateTables()
-        {
-            string query = "";
-            return ExecuteQuery(query);
+            return -1;
         }
     }
 }

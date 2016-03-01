@@ -2,6 +2,7 @@
 using System.Collections;
 using app.dao;
 using app.manager;
+using app.service;
 
 public class LoginAction : MonoBehaviour {
 
@@ -19,6 +20,7 @@ public class LoginAction : MonoBehaviour {
     {
         //check user
         Debug.Log("check user name===user name =="+_userName+"======password=="+_password);
+        LoginService.Login(_userName,_password);
         if (true)
         {
             //loadDB
