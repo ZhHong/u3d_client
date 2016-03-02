@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text.RegularExpressions;
 using app.dao;
 using app.manager;
 using app.service;
@@ -32,11 +33,19 @@ public class LoginAction : MonoBehaviour {
 
     public void SetUserName(string userName)
     {
+        bool canMatch = Regex.IsMatch(_userName, "(^[a-zA-Z0-9]{6,16}$)|(^[\u4E00-\u9FA5]{2,8}$)");
+        if (!canMatch) {
+            Debug.Log("user name can not pass the law");
+        }
         _userName = userName;
     }
 
     public void SetPassword(string password)
     {
+        bool canMatch = Regex.IsMatch(password, "(^[a-zA-Z0-9]{6,16}$)|(^[\u4E00-\u9FA5]{2,8}$)");
+        if (!canMatch) {
+            Debug.Log("password can not pass the law");
+        }
         _password = password;
     }
 }

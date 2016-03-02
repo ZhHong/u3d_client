@@ -167,7 +167,12 @@ namespace app.manager
 			loginState =  sqldb.CheckUserLogin(username, password);
 		}
 
-		public void CreateUser(string username,string password){
+        public int CheckUserInDB(string username) {
+            int action = sqldb.CheckUserIfExsits(username);
+            return action;
+        }
+
+        public void CreateUser(string username,string password){
 			sqldb.CreateUser (username, password);
 		}
 		
