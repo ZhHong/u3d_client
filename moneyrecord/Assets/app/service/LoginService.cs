@@ -9,8 +9,7 @@ namespace app.service
         public static void Login(string username,string password)
         {
             GameWorld instance = GameWorld.getInstance();
-            int val =instance.CheckUserLogin(username,password);
-
+            instance.CheckUserLogin(username,password);
         }
     }
 }

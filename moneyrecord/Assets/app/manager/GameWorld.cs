@@ -22,11 +22,12 @@ namespace app.manager
 
         private string[] sqlStatement = { };
 
+		private int loginState =0;
 
         private GameWorld()
         {
             var action = initGameWorld();
-            if (action != 3){
+			if (action != SUCCESS_STEP){
                 Debug.Log(" init game world field============");
             }
         }
@@ -56,6 +57,9 @@ namespace app.manager
             }
 		}
 
+		public int getLoginState(){
+			return loginState;
+		}
         public void loadSceneWithLoading(string _nextscene)
         {
             nextloadScene = _nextscene;
@@ -67,15 +71,10 @@ namespace app.manager
             nextloadScene = _nextscene;
             SceneManager.LoadScene(_nextscene);
         }
-
-        public int CheckUserLogin(string username, string password)
-        {
-            sqldb.CreateUser(username, password);
-            return sqldb.CheckUserLogin(username, password);
-        }
-
         private int initConfig(int _init_s)
         {
+			//write and read game save data
+			/*
             string dirpath = Application.persistentDataPath + "/local";
             LocalData_Trans.CreateDirectory(dirpath);
 			string fileName = dirpath + Utils.GLOBAL_GAME_SAVE_PATH;
@@ -92,8 +91,10 @@ namespace app.manager
             Debug.Log("get jsdata ==============jsdata['name']===" + jsdata["name"]);
             //Hashtable get_tab = LitJson.JsonMapper.ToObject (data);
             //Debug.Log ("get tab name==============="+get_tab["name"]);
+			*
 
             //load/write secret config
+			/*
 			string configpath = Application.dataPath + Utils.GLOBAL_CONFIG_PATH;
             Hashtable config_data = new Hashtable ();
             Hashtable info = new Hashtable ();
@@ -111,17 +112,15 @@ namespace app.manager
             LitJson.JsonData ss = config_js["server1"];
             Debug.Log(ss["port"]);
             Debug.Log(ss["host"]);
+            */
 
+			//get and run db file
             string dbInitPath = Application.dataPath + Utils.GLOBAL_DBINIT_PATH;
             string getDbInit = LocalData_Trans.GetData(dbInitPath,false);
-
-            Debug.Log(" get init data base str============"+getDbInit);
-
             sqlStatement = getDbInit.Split('#');
-            for (int i=0;i< sqlStatement.Length;i++) {
-                Debug.Log("sql statement=============="+ sqlStatement[i]);
-            }
-            initConfigInfo(config_js);
+
+
+            //initConfigInfo(config_js);
 			_init_s += 1;
             return _init_s;
         }
@@ -161,6 +160,16 @@ namespace app.manager
         public void initNetWork()
         {
         }
+			
+		public void CheckUserLogin(string username, string password)
+		{
+			//sqldb.CreateUser(username, password);
+			loginState =  sqldb.CheckUserLogin(username, password);
+		}
 
+		public void CreateUser(string username,string password){
+			sqldb.CreateUser (username, password);
+		}
+		
     }
 }

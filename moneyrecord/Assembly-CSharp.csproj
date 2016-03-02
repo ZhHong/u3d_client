@@ -49,8 +49,10 @@
      <Compile Include="Assets\app\actions\LoginAction.cs" />
      <Compile Include="Assets\app\dao\SqliteDB.cs" />
      <Compile Include="Assets\app\event\MREventSys.cs" />
+     <Compile Include="Assets\app\layer\MsgLayer.cs" />
      <Compile Include="Assets\app\manager\GameWorld.cs" />
      <Compile Include="Assets\app\service\CreateService.cs" />
+     <Compile Include="Assets\app\service\LoginService.cs" />
      <Compile Include="Assets\app\utils\Utils.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

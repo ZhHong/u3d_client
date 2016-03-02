@@ -21,9 +21,7 @@ namespace app.dao
 			OpenDB(db_file);
             //run database create table and update config
             for (int i=0;i<sqlstatement.Length;i++) {
-                reader= ExecuteQuery(sqlstatement[i]);
-                int affect_rows=reader.RecordsAffected;
-                Debug.Log("=============affect rows=========="+affect_rows);
+                ExecuteQuery(sqlstatement[i],false);
             }
 
 		}
@@ -40,7 +38,7 @@ namespace app.dao
         public void OpenDB(string connectionStr)
         {
             OpenSQLDB(connectionStr);
-            Debug.Log(connectionStr);
+            //Debug.Log(connectionStr);
         }
 
         public void OpenSQLDB(string connectionStr)
@@ -78,13 +76,17 @@ namespace app.dao
             Debug.Log("disconect from db");
         }
 
-        public SqliteDataReader ExecuteQuery(string sqlQuery)
+		public SqliteDataReader ExecuteQuery(string sqlQuery,bool needReturn=true)
         {
             //do sql
             reader = null;
             dbCommand = dbConnection.CreateCommand();
             dbCommand.CommandText = sqlQuery;
-            reader = dbCommand.ExecuteReader();
+			if (needReturn) {
+				reader = dbCommand.ExecuteReader ();
+			} else {
+				dbCommand.ExecuteNonQuery ();
+			}
             return reader;
         }
 
@@ -94,29 +96,40 @@ namespace app.dao
             reader=ExecuteQuery(sql);
             if (reader.HasRows)
             {
+				reader.Read ();
                 string cryptopassword=reader.GetString(0);
-                int uid = reader.GetInt16(1);
-                int reg_time = reader.GetInt16(2);
+				int uid = reader.GetInt32(1);
+				int reg_time = reader.GetInt32(2);
+
+				if(cryptopassword == password)
+				{
+					return 1;	
+				}
 
                 Debug.Log("sql result===========cryptopassword="+cryptopassword+"==uid="+uid+"===reg_time=="+reg_time);
 
             }
-            return 1;
+            return -1;
         }
 
         public int CreateUser(string username, string password)
         {
-            string sql = "select password,uid,reg_time from user_info where username = '" + username+"'";
+			//uid,username,password,reg_time
+			int reg_time = utils.Utils.GetNowTime();
+            string sql = "insert into user_info values(null,'" + username + "','" + password + "'," + reg_time + ")";
             reader = ExecuteQuery(sql);
-            if (!reader.HasRows)
-            {
-                //uid,username,password,reg_time
-                int reg_time = utils.Utils.GetNowTime();
-                sql = "insert into user_info values(null,'" + username + "','" + password + "'," + reg_time + ")";
-                reader = ExecuteQuery(sql);
-                return reader.RecordsAffected;
-            }
-            return -1;
+            
+			return 1;
         }
+
+		public int CheckUserIfExsits(string username){
+			string sql = "select password,uid,reg_time from user_info where username = '" + username+"'";
+			reader = ExecuteQuery (sql);
+			if (reader.HasRows) {
+				return -1;
+			} else {
+				return 1;
+			}
+		}
     }
 }
