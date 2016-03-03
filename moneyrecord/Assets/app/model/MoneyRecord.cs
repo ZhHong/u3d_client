@@ -5,7 +5,7 @@ namespace app.model{
 	public class MoneyRecord{
 		
 		private User user = null;
-		private Hashtable records=null;
+		private LitJson.JsonData records=null;
 		private static MoneyRecord record=null;
 
 		private MoneyRecord(){
@@ -18,9 +18,14 @@ namespace app.model{
 			return record;
 		}
 
-		public bool InitRecordFromDB(){
-			//init data from db for user
+		public bool InitRecordFromDB(LitJson.JsonData data){
+            //init data from db for user
+            records = data;
 			return true;
 		}
+
+        public LitJson.JsonData GetRecordData() {
+            return records;
+        }
 	}
 }

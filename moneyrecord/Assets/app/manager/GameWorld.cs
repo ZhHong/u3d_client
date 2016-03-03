@@ -5,6 +5,7 @@ using System;
 using Plugins.LocalData_Trans;
 using app.dao;
 using app.utils;
+using app.model;
 namespace app.manager
 {
     public sealed class GameWorld
@@ -177,7 +178,8 @@ namespace app.manager
 		}
 
 		public void LoadDefaultData(){
-			sqldb.GetCurrentMoneyRecord (1);
+            MoneyRecord.Instance().InitRecordFromDB(
+            sqldb.GetCurrentMoneyRecord(1));
 		}
 		
     }

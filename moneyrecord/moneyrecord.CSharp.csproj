@@ -12,7 +12,7 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
@@ -90,12 +90,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\app\actions\CreateAction.cs" />
+    <Compile Include="Assets\app\actions\DetailAction.cs" />
     <Compile Include="Assets\app\actions\LoginAction.cs" />
     <Compile Include="Assets\app\dao\SqliteDB.cs" />
     <Compile Include="Assets\app\event\MREventSys.cs" />
     <Compile Include="Assets\app\layer\MsgLayer.cs" />
+    <Compile Include="Assets\app\layer\TableLayer.cs" />
     <Compile Include="Assets\app\manager\GameWorld.cs" />
+    <Compile Include="Assets\app\model\MoneyRecord.cs" />
+    <Compile Include="Assets\app\model\User.cs" />
     <Compile Include="Assets\app\service\CreateService.cs" />
+    <Compile Include="Assets\app\service\DetailService.cs" />
     <Compile Include="Assets\app\service\LoginService.cs" />
     <Compile Include="Assets\app\utils\Utils.cs" />
   </ItemGroup>

@@ -4,6 +4,7 @@ using Mono.Data.Sqlite;
 using System;
 using System.Data;
 using app.utils;
+using LitJson;
 
 namespace app.dao
 {
@@ -142,12 +143,14 @@ namespace app.dao
 			return -1;
 		}
 
-		public int GetCurrentMoneyRecord(int uid){
-			//get current user money record
+		public JsonData GetCurrentMoneyRecord(int uid){
+            //get current user money record
+            Hashtable ResultSet = new Hashtable();
 			string sql = "select id,record_time,money_class,pay_type,pay_value,msg,insert_time from money_record where uid = "+uid;
 			reader = ExecuteQuery (sql);
 			if (reader.HasRows) {
-				//has records
+                //has records
+                int i = 0;
 				while(reader.Read()){
 					int id = reader.GetInt32 (0);
 					int record_time = reader.GetInt32 (1);
@@ -156,12 +159,24 @@ namespace app.dao
 					float pay_value = reader.GetFloat (4);
 					string msg = reader.GetString (5);
 					int insert_time = reader.GetInt32 (6);
+                    Hashtable temp = new Hashtable();
+                    temp[0] = id;
+                    temp[1] = record_time;
+                    temp[2] = money_class;
+                    temp[3] = pay_type;
+                    temp[4] = pay_value;
+                    temp[5] = msg;
+                    temp[6] = insert_time;
+                    ResultSet.Add(i, temp);
+                    i++;
 					Debug.Log ("load db record ======={"+id+","+record_time+","+money_class+","+pay_type+","+msg+","+insert_time+"}");
 				}
 
 			}
-			// no record
-			return -1;
+            // no record
+            string js_str = JsonMapper.ToJson(ResultSet);
+            JsonData jsdata = JsonMapper.ToObject(js_str);
+			return jsdata;
 		}
 
 		public int GetCountMonthData(){

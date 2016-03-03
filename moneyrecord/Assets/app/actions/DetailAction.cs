@@ -15,4 +15,11 @@ public class DetailAction : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void OnBtnClick() {
+        GameObject tbl = new GameObject("TableLayer");
+        TableLayer tablay = tbl.AddComponent<TableLayer>();
+        //tablay.CreateTableView(app.model.MoneyRecord.Instance().GetRecordData());
+        tablay.Show();
+    }
 }
