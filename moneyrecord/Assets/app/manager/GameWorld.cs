@@ -117,7 +117,7 @@ namespace app.manager
 
 			//get and run db file
             //string dbInitPath = Application.dataPath + Utils.GLOBAL_DBINIT_PATH;
-			TextAsset data = Resources.Load ("config") as TextAsset;
+			TextAsset data = Resources.Load ("INITDB") as TextAsset;
 
             //string getDbInit = LocalData_Trans.GetData(dbInitPath,false);
 			if (data != null) {

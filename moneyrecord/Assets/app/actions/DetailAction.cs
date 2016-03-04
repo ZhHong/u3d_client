@@ -17,9 +17,18 @@ public class DetailAction : MonoBehaviour {
 	}
 
     public void OnBtnClick() {
+        //click will create table view all the time
+        TableLayer ifhas=GetComponent<TableLayer>();
+        if (ifhas != null) {
+            return;
+        }
         GameObject tbl = new GameObject("TableLayer");
         TableLayer tablay = tbl.AddComponent<TableLayer>();
         tablay.CreateTableView(app.model.MoneyRecord.Instance().GetRecordData());
         tablay.Show();
+    }
+
+    public void OnCreateNewClick() {
+        
     }
 }
