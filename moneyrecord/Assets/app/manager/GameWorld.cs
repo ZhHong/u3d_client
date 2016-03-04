@@ -116,8 +116,18 @@ namespace app.manager
             */
 
 			//get and run db file
-            string dbInitPath = Application.dataPath + Utils.GLOBAL_DBINIT_PATH;
-            string getDbInit = LocalData_Trans.GetData(dbInitPath,false);
+            //string dbInitPath = Application.dataPath + Utils.GLOBAL_DBINIT_PATH;
+			TextAsset data = Resources.Load ("config") as TextAsset;
+
+            //string getDbInit = LocalData_Trans.GetData(dbInitPath,false);
+			if (data != null) {
+
+				Debug.Log (" type of data=========");
+			} else {
+				Debug.Log ("data is None================");
+			}
+			Debug.Log("data =============="+data.text);
+			string getDbInit = data.text;
             sqlStatement = getDbInit.Split('#');
 
 
@@ -142,7 +152,7 @@ namespace app.manager
 		{
 			if (sqldb == null) {
 				//get db file location
-				string db_file_location ="Data Source = "+Application.dataPath+Utils.GLOBAL_DB_FILE_PATH;
+				string db_file_location ="Data Source = "+Application.persistentDataPath+Utils.GLOBAL_DB_FILE_PATH;
 				sqldb = SqliteDB.getInstance (db_file_location, sqlStatement);
 			}
 			_init_s += 1;

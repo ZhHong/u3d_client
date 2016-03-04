@@ -6,11 +6,11 @@ namespace app.utils{
 		//game save path
 		public const string GLOBAL_GAME_SAVE_PATH = "/CURENT.MR";
 		//db path
-		public const string GLOBAL_DB_FILE_PATH  = "/app/conf/KWDUWIDAJ";
+		public const string GLOBAL_DB_FILE_PATH  = "/KWDUWIDAJ";
 		//config path
-		public const string GLOBAL_CONFIG_PATH = "/app/conf/config";
+		public const string GLOBAL_CONFIG_PATH = "config";
         //db init path
-        public const string GLOBAL_DBINIT_PATH = "/app/conf/INITDB";
+		public const string GLOBAL_DBINIT_PATH = "INITDB";
 
         public static int GetNowTime() {
             System.DateTime starttime = System.TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1, 0, 0, 0, 0));

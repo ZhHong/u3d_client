@@ -19,7 +19,7 @@ public class DetailAction : MonoBehaviour {
     public void OnBtnClick() {
         GameObject tbl = new GameObject("TableLayer");
         TableLayer tablay = tbl.AddComponent<TableLayer>();
-        //tablay.CreateTableView(app.model.MoneyRecord.Instance().GetRecordData());
+        tablay.CreateTableView(app.model.MoneyRecord.Instance().GetRecordData());
         tablay.Show();
     }
 }

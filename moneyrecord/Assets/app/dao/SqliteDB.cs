@@ -143,7 +143,7 @@ namespace app.dao
 			return -1;
 		}
 
-		public JsonData GetCurrentMoneyRecord(int uid){
+		public Hashtable GetCurrentMoneyRecord(int uid){
             //get current user money record
             Hashtable ResultSet = new Hashtable();
 			string sql = "select id,record_time,money_class,pay_type,pay_value,msg,insert_time from money_record where uid = "+uid;
@@ -173,10 +173,7 @@ namespace app.dao
 				}
 
 			}
-            // no record
-            string js_str = JsonMapper.ToJson(ResultSet);
-            JsonData jsdata = JsonMapper.ToObject(js_str);
-			return jsdata;
+			return ResultSet;
 		}
 
 		public int GetCountMonthData(){

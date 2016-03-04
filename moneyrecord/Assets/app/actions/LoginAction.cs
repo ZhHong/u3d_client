@@ -24,7 +24,9 @@ public class LoginAction : MonoBehaviour {
         LoginService.Login(_userName,_password);
 		if (gameworld.getLoginState () != 1) {
 			Debug.Log ("login failed===============================");
-			MsgLayer.Show ("error");
+			GameObject msglayer = new GameObject("MsgLayer");
+			MsgLayer msg = msglayer.AddComponent<MsgLayer>();
+			msg.Show ("Error");
 		} else {
 			//load database data
 			gameworld.loadSceneWithoutLoading("DetailScene");

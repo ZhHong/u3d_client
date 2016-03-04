@@ -11,9 +11,10 @@ public class TableLayer : MonoBehaviour {
     private int colums = 0;
     private int labelWidth = 40;
     private int labelHeight = 20;
-    private LitJson.JsonData showData = null;
+	private Hashtable showData = null;
 
 	void OnGUI(){
+		//update all times
         //Todo
         //use data colums rows
         //use data length max to decided the label lenth
@@ -26,19 +27,23 @@ public class TableLayer : MonoBehaviour {
         srollPostion=GUI.BeginScrollView(new Rect(100, 100, labelWidth * 5, labelHeight * 4), srollPostion, new Rect(0, 0, labelWidth * colums, labelHeight * rows));
         for (int i = 0; i < rows; i++)
         {
+			Hashtable data_temp = (Hashtable)showData [i];
             for (int j = 0; j < colums; j++)
             {
-                GUI.Label(new Rect(0 + (labelWidth * j), 0 + (labelHeight * i), labelWidth, labelHeight), (showData[i][j]).ToString());
+				string str = (data_temp[j]).ToString();
+
+				//Debug.Log ("data["+i+"],["+j+"]===="+str);
+                GUI.Label(new Rect(0 + (labelWidth * j), 0 + (labelHeight * i), labelWidth, labelHeight), str);
             }
         }
         GUI.EndScrollView();
     }
 
-	public void CreateTableView(JsonData data){
+	public void CreateTableView(Hashtable data){
         rows = data.Count;
-        foreach(JsonData hal in data)
+		foreach(DictionaryEntry hal in data)
         {
-            colums = hal.Count;
+			colums = ((Hashtable)hal.Value).Count;
         }
         showData = data;
     }

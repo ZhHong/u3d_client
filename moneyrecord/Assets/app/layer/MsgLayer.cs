@@ -16,7 +16,7 @@ public class MsgLayer : MonoBehaviour {
 
 		}
 
-		public static void Show(string show_str){
+		public void Show(string show_str){
 			showString = show_str;
 			showWindow = true;
 		}

@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\app\layer\TableLayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\app\manager\GameWorld.cs">
     <Files>
-      <File FileName="Assets\app\layer\TableLayer.cs" Line="14" Column="11" />
-      <File FileName="Assets\app\utils\Utils.cs" Line="1" Column="1" />
+      <File FileName="Assets\app\utils\Utils.cs" Line="13" Column="51" />
+      <File FileName="Assets\app\actions\LoginAction.cs" Line="29" Column="9" />
+      <File FileName="Assets\app\layer\TableLayer.cs" Line="8" Column="2" />
       <File FileName="Assets\app\dao\SqliteDB.cs" Line="1" Column="1" />
-      <File FileName="Assets\app\manager\GameWorld.cs" Line="1" Column="1" />
-      <File FileName="Assets\app\actions\LoginAction.cs" Line="1" Column="1" />
+      <File FileName="Assets\app\manager\GameWorld.cs" Line="118" Column="25" />
       <File FileName="Assets\app\actions\CreateAction.cs" Line="1" Column="1" />
       <File FileName="Assets\Plugins\LocalData_Trans.cs" Line="1" Column="1" />
       <File FileName="Assets\app\service\LoginService.cs" Line="1" Column="1" />
