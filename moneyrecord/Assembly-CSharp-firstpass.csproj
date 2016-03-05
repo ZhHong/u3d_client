@@ -55,6 +55,8 @@
      <Compile Include="Assets\Plugins\LitJson\Lexer.cs" />
      <Compile Include="Assets\Plugins\LitJson\ParserToken.cs" />
      <Compile Include="Assets\Plugins\LocalData_Trans.cs" />
+     <None Include="Assets\Resources\INITDB.txt" />
+     <None Include="Assets\Resources\config.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

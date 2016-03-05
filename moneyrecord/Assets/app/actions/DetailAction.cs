@@ -2,6 +2,7 @@
 using System.Collections;
 using app.manager;
 using app.service;
+using app.layer;
 
 public class DetailAction : MonoBehaviour {
 
@@ -29,6 +30,9 @@ public class DetailAction : MonoBehaviour {
     }
 
     public void OnCreateNewClick() {
-        
+        //create new record 
+		GameObject msgl = new GameObject("MsgLayer");
+		MsgLayer msg = msgl.AddComponent<MsgLayer> ();
+		msg.Show ("Create New Record");
     }
 }

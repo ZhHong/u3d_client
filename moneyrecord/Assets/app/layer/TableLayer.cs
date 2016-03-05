@@ -9,8 +9,8 @@ public class TableLayer : MonoBehaviour {
     private Vector2 srollPostion = Vector2.zero;
     private int rows = 0;
     private int colums = 0;
-    private int labelWidth = 40;
-    private int labelHeight = 20;
+	private int labelWidth = Screen.width/5;
+	private int labelHeight = Screen.height/20;
 	private Hashtable showData = null;
 
 	void OnGUI(){
@@ -22,9 +22,9 @@ public class TableLayer : MonoBehaviour {
 		if (!showTable){
 			return;
 		}
-        
-
-        srollPostion=GUI.BeginScrollView(new Rect(100, 100, labelWidth * 5, labelHeight * 4), srollPostion, new Rect(0, 0, labelWidth * colums, labelHeight * rows));
+		GUI.contentColor = Color.red;
+		GUI.BeginGroup (new Rect (Screen.width/10,Screen.height/10,Screen.width*4/5,Screen.height*4/5));
+		srollPostion=GUI.BeginScrollView(new Rect(0, 0, labelWidth *colums, labelHeight *rows), srollPostion, new Rect(0, 0, Screen.width*4/5,Screen.height*4/5));
         for (int i = 0; i < rows; i++)
         {
 			Hashtable data_temp = (Hashtable)showData [i];
@@ -33,10 +33,11 @@ public class TableLayer : MonoBehaviour {
 				string str = (data_temp[j]).ToString();
 
 				//Debug.Log ("data["+i+"],["+j+"]===="+str);
-                GUI.Label(new Rect(0 + (labelWidth * j), 0 + (labelHeight * i), labelWidth, labelHeight), str);
+				GUI.Button(new Rect(0 + (labelWidth * j), 0 + (labelHeight * i), labelWidth, labelHeight), str);
             }
         }
         GUI.EndScrollView();
+		GUI.EndGroup ();
     }
 
 	public void CreateTableView(Hashtable data){
