@@ -59,8 +59,15 @@ namespace app.manager
 		}
 
 		public int getLoginState(){
+            //login process
 			return loginState;
 		}
+
+        public void LogOut() {
+            //log out process
+            loginState = 0;
+        }
+
         public void loadSceneWithLoading(string _nextscene)
         {
             nextloadScene = _nextscene;

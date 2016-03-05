@@ -104,7 +104,7 @@ namespace app.dao
 					int reg_time = reader.GetInt32 (2);
 
 					Debug.Log("sql result===========cryptopassword="+cryptopassword+"==uid="+uid+"===reg_time=="+reg_time);
-					if (cryptopassword == password) {
+					if (cryptopassword == password && password !="") {
 						return 1;	
 					}
 				}

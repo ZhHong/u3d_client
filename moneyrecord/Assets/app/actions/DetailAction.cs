@@ -19,7 +19,7 @@ public class DetailAction : MonoBehaviour {
 
     public void OnBtnClick() {
         //click will create table view all the time
-        TableLayer ifhas=GetComponent<TableLayer>();
+        GameObject ifhas=GameObject.Find("TableLayer");
         if (ifhas != null) {
             return;
         }
@@ -31,8 +31,21 @@ public class DetailAction : MonoBehaviour {
 
     public void OnCreateNewClick() {
         //create new record 
+        GameObject ifhas = GameObject.Find("MsgLayer");
+        if (ifhas != null) {
+            MsgLayer msghas=ifhas.GetComponent<MsgLayer>();
+            msghas.Show("");
+            return;
+        }
 		GameObject msgl = new GameObject("MsgLayer");
 		MsgLayer msg = msgl.AddComponent<MsgLayer> ();
 		msg.Show ("Create New Record");
+    }
+
+    public void OnLogOutClick() {
+        //clear work
+        //logout work
+        GameWorld.getInstance().LogOut();
+        GameWorld.getInstance().loadSceneWithoutLoading("LoginScene");
     }
 }
