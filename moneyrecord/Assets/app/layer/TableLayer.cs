@@ -37,7 +37,15 @@ public class TableLayer : MonoBehaviour {
         if (!showTable){
 			return;
 		}
-		GUI.contentColor = Color.red;
+        if (showData == null | showData.Count ==0) {
+            GUI.contentColor = Color.red;
+            GUIStyle gsl = new GUIStyle();
+            gsl.fontSize = Screen.width / 32;
+            gsl.alignment= TextAnchor.MiddleCenter;
+            GUI.Label(new Rect(Screen.width/8,Screen.height/8,Screen.width/4,Screen.height/4),"没有记录！",gsl);
+            return;
+        }
+		//GUI.contentColor = Color.red;
         GUI.BeginGroup (new Rect (Screen.width/10,Screen.height/10,Screen.width*4/5,Screen.height*4/5));
         
 		srollPostion=GUI.BeginScrollView(new Rect(0, 0, Screen.width * 4 / 5, Screen.height * 4 / 5), srollPostion, new Rect(0, 0, labelWidth * colums, labelHeight * rows));

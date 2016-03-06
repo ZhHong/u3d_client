@@ -16,17 +16,15 @@ public class LoginAction : MonoBehaviour {
     private bool CheckUserPass = false;
 
 	void Start(){
-		Debug.Log ("on login ui start=================");
 		if (gameworld == null) {
 			gameworld = GameWorld.getInstance ();
 		}
+        UpdateButtonLoginState();
 	}
     public void onLoginClick()
     {
         //check user
-        Debug.Log("check user name===user name =="+_userName+"======password=="+_password);
         if (!(CheckUserName && CheckUserPass)) {
-            Debug.Log("login failed===============================usename password check filed");
             string showmsg = "Error";
             if (_userName == "" | _password == "") {
                 showmsg += "user name and password can not be null";
@@ -79,20 +77,42 @@ public class LoginAction : MonoBehaviour {
     {
         bool canMatch = Regex.IsMatch(userName, "(^[a-zA-Z0-9]{6,16}$)|(^[\u4E00-\u9FA5]{2,8}$)");
         if (!canMatch) {
-            Debug.Log("user name can not pass the law");
+            SetComponetTextState("TextLoginUserNameError","USERNAME_NOT_FIT");
+            return;
         }
         _userName = userName;
         CheckUserName = true;
+        SetComponetTextState("TextLoginUserNameError", "");
+        UpdateButtonLoginState();
     }
 
     public void SetPassword(string password)
     {
         bool canMatch = Regex.IsMatch(password, "(^[a-zA-Z0-9]{6,16}$)|(^[\u4E00-\u9FA5]{2,8}$)");
         if (!canMatch) {
-            Debug.Log("password can not pass the law");
+            SetComponetTextState("TextLoginPasswordError", "USERPASSWORD_NOT_FIT");
+            return;
         }
         _password = password;
         CheckUserPass = true;
+        SetComponetTextState("TextLoginPasswordError", "");
+        UpdateButtonLoginState();
+    }
+
+
+    private void SetComponetTextState(string ComponetName,string ErrorString="") {
+        //set componet Text State
+        GameObject gbj = GameObject.Find(ComponetName);
+        if (gbj != null) {
+            Text t = gbj.GetComponent<Text>();
+            if (ErrorString =="")
+            {
+                t.text = "";
+            }
+            GameWorld.getInstance().errorData.SetErrorData(ErrorString);
+            t.text = GameWorld.getInstance().errorData.GetErrorString();
+            t.color = Color.red;
+        }
     }
 
     private void ResetInputTextField()
@@ -111,5 +131,21 @@ public class LoginAction : MonoBehaviour {
             InputField tp =inputpass.GetComponent<InputField>();
             tp.text = "";
         }
+    }
+
+    private void ResetButtonLoginState(bool state) {
+        GameObject gbj = GameObject.Find("ButtonLogin");
+        if (gbj != null) {
+            Button b = gbj.GetComponent<Button>();
+            b.enabled = state;
+        }
+    }
+
+    private void UpdateButtonLoginState() {
+        if (CheckUserName && CheckUserPass) {
+            ResetButtonLoginState(true);
+            return;
+        }
+        ResetButtonLoginState(false);
     }
 }

@@ -6,6 +6,7 @@ using Plugins.LocalData_Trans;
 using app.dao;
 using app.utils;
 using app.model;
+using app.proto;
 namespace app.manager
 {
     public sealed class GameWorld
@@ -24,6 +25,8 @@ namespace app.manager
         private string[] sqlStatement = { };
 
 		private int loginState =0;
+
+        public ErrorData errorData = null;
 
         private GameWorld()
         {
@@ -151,6 +154,7 @@ namespace app.manager
 
         private int initOtherData(int _init_s)
         {
+            errorData = ErrorData.getInstance();
 			_init_s += 1;
             return _init_s;
         }
@@ -185,9 +189,8 @@ namespace app.manager
 			loginState =  sqldb.CheckUserLogin(username, password);
 		}
 
-        public int CheckUserInDB(string username) {
-            int action = sqldb.CheckUserIfExsits(username);
-            return action;
+        public string CheckUserInDB(string username) {
+            return sqldb.CheckUserIfExsits(username);
         }
 
         public void CreateUser(string username,string password){
@@ -196,7 +199,7 @@ namespace app.manager
 
 		public void LoadDefaultData(){
             MoneyRecord.Instance().InitRecordFromDB(
-            sqldb.GetCurrentMoneyRecord(1));
+            sqldb.GetCurrentMoneyRecord(User.Instance().GetUid()));
 		}
 		
     }

@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using app.utils;
 using LitJson;
+using app.model;
 
 namespace app.dao
 {
@@ -102,9 +103,9 @@ namespace app.dao
 					string cryptopassword = reader.GetString (0);
 					int uid = reader.GetInt32 (1);
 					int reg_time = reader.GetInt32 (2);
-
-					Debug.Log("sql result===========cryptopassword="+cryptopassword+"==uid="+uid+"===reg_time=="+reg_time);
 					if (cryptopassword == password && password !="") {
+                        User.Instance().ResetUser();
+                        User.Instance().InitUser(username,password,uid,reg_time);
 						return 1;	
 					}
 				}
@@ -124,13 +125,13 @@ namespace app.dao
 			return 1;
         }
 
-		public int CheckUserIfExsits(string username){
+		public string CheckUserIfExsits(string username){
 			string sql = "select password,uid,reg_time from user_info where username = '" + username+"'";
 			reader = ExecuteQuery (sql);
 			if (reader.HasRows) {
-				return -1;
+				return "USER_CREATE_EXSITS";
 			} else {
-				return 1;
+				return "SUCCESS";
 			}
 		}
 

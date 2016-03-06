@@ -35,7 +35,12 @@ namespace app.model{
 			return reg_time;
 		}
 
-		public bool InitUser(){
+		public bool InitUser(string uname,string pwd,int _uid,int _reg_time){
+            UserStatus = 1;
+            username = uname;
+            password = pwd;
+            uid = _uid;
+            reg_time = _reg_time;
 			return true;
 		}
 
@@ -43,6 +48,7 @@ namespace app.model{
 			UserStatus = 0;
 			username = "";
 			password = "";
+            uid = 0;
 			reg_time = 0;
 		}
 

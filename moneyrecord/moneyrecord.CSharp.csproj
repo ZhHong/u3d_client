@@ -94,11 +94,14 @@
     <Compile Include="Assets\app\actions\LoginAction.cs" />
     <Compile Include="Assets\app\dao\SqliteDB.cs" />
     <Compile Include="Assets\app\event\MREventSys.cs" />
+    <Compile Include="Assets\app\layer\ComboBox.cs" />
     <Compile Include="Assets\app\layer\MsgLayer.cs" />
     <Compile Include="Assets\app\layer\TableLayer.cs" />
+    <Compile Include="Assets\app\layer\WarningLayer.cs" />
     <Compile Include="Assets\app\manager\GameWorld.cs" />
     <Compile Include="Assets\app\model\MoneyRecord.cs" />
     <Compile Include="Assets\app\model\User.cs" />
+    <Compile Include="Assets\app\proto\ErrorData.cs" />
     <Compile Include="Assets\app\service\CreateService.cs" />
     <Compile Include="Assets\app\service\DetailService.cs" />
     <Compile Include="Assets\app\service\LoginService.cs" />

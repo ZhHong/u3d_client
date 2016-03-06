@@ -39,7 +39,7 @@ public class DetailAction : MonoBehaviour {
         }
 		GameObject msgl = new GameObject("MsgLayer");
 		MsgLayer msg = msgl.AddComponent<MsgLayer> ();
-		msg.Show ("Create New Record");
+		msg.Show ("创建新记录");
     }
 
     public void OnLogOutClick() {
