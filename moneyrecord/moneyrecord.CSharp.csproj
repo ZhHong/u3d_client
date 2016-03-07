@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\app\actions\CreateAction.cs" />
+    <Compile Include="Assets\app\actions\CreateRecordAction.cs" />
     <Compile Include="Assets\app\actions\DetailAction.cs" />
     <Compile Include="Assets\app\actions\LoginAction.cs" />
     <Compile Include="Assets\app\dao\SqliteDB.cs" />
@@ -100,8 +101,10 @@
     <Compile Include="Assets\app\layer\WarningLayer.cs" />
     <Compile Include="Assets\app\manager\GameWorld.cs" />
     <Compile Include="Assets\app\model\MoneyRecord.cs" />
+    <Compile Include="Assets\app\model\SuperAdmin.cs" />
     <Compile Include="Assets\app\model\User.cs" />
     <Compile Include="Assets\app\proto\ErrorData.cs" />
+    <Compile Include="Assets\app\service\CreateRecordService.cs" />
     <Compile Include="Assets\app\service\CreateService.cs" />
     <Compile Include="Assets\app\service\DetailService.cs" />
     <Compile Include="Assets\app\service\LoginService.cs" />

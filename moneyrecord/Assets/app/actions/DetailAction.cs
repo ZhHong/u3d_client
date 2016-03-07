@@ -31,15 +31,16 @@ public class DetailAction : MonoBehaviour {
 
     public void OnCreateNewClick() {
         //create new record 
-        GameObject ifhas = GameObject.Find("MsgLayer");
-        if (ifhas != null) {
-            MsgLayer msghas=ifhas.GetComponent<MsgLayer>();
-            msghas.Show("");
-            return;
-        }
-		GameObject msgl = new GameObject("MsgLayer");
-		MsgLayer msg = msgl.AddComponent<MsgLayer> ();
-		msg.Show ("创建新记录");
+        //      GameObject ifhas = GameObject.Find("MsgLayer");
+        //      if (ifhas != null) {
+        //          MsgLayer msghas=ifhas.GetComponent<MsgLayer>();
+        //          msghas.Show("");
+        //          return;
+        //      }
+        //GameObject msgl = new GameObject("MsgLayer");
+        //MsgLayer msg = msgl.AddComponent<MsgLayer> ();
+        //msg.Show ("创建新记录");
+        GameWorld.getInstance().loadSceneWithoutLoading("CreateNewRecord");
     }
 
     public void OnLogOutClick() {
