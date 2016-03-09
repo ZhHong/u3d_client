@@ -19,5 +19,13 @@ namespace app.utils{
 
             return unixtime;
         }
+
+		public static int GetStrTime(int year,int month,int day){
+			return 0;
+		}
+
+		public static void GetTimeStr (int time){
+			
+		}
 	}
 }

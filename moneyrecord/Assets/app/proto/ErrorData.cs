@@ -7,6 +7,9 @@ namespace app.proto
         public string ErrorText = "";
         private Hashtable ErrorArry = new Hashtable();
         private static ErrorData instance = null;
+
+		private Hashtable MoneyType = new Hashtable();
+		private Hashtable PayType = new Hashtable();
         private ErrorData()
         {
             ErrorArry[0] = "未知错误!";
@@ -15,7 +18,28 @@ namespace app.proto
             ErrorArry["USERPASSWORD_AGAIN_NOT_FIT"] = "两次输入的密码不一致!";
             ErrorArry["USER_CREATE_EXSITS"] = "用户名已经存在!";
             ErrorArry["USER_LOGIN_ERROR"] = "用户名或者密码错误!";
-            ErrorArry[""] = "";
+            ErrorArry["MONEY_CAN_NOT_NONE"] = "必须输入金额!";
+			ErrorArry ["MSG_CAN_NOT_NONE"] = "备注信息不能为空！";
+			ErrorArry ["MONTH_2_CHANGED"] = "2月日期已经被修正";
+			ErrorArry ["TIME_WARNING_FRUTURE"] = "这是一个未来时间！";
+			ErrorArry ["TIME_WARNING_PASSED"] = "这是一个已经过去的时间！";
+
+
+			MoneyType [0] = "支出";
+			MoneyType [1] = "收入";
+
+			PayType [0] = "吃";
+			PayType [1] = "住";
+			PayType [2] = "穿";
+			PayType [3] = "交通";
+			PayType [4] = "手机";
+			PayType [5] = "网络";
+			PayType [6] = "游戏";
+			PayType [7] = "烟";
+			PayType [8] = "零食";
+			PayType [9] = "水果";
+
+
         }
 
         public static ErrorData getInstance()
@@ -47,5 +71,47 @@ namespace app.proto
             }
             return temp;
         }
+
+		public string GetMoneyTypeStr(int index){
+			if (MoneyType.ContainsKey(index)){
+				return MoneyType [index].ToString();
+			}
+			return "";
+		}
+
+		public int GetMoneyTypeIndex(string value){
+			if (value == "") {
+				return 0;
+			}
+			if(MoneyType.ContainsValue(value)){
+				foreach(DictionaryEntry d in MoneyType){
+					if(d.Value.ToString() == value){
+						return int.Parse(d.Key.ToString());
+					}
+				}
+			}
+			return -1;
+		}
+
+		public string GetPayTypeStr(int index){
+			if(PayType.ContainsKey(index)){
+				return PayType [index].ToString();
+			}
+			return "";
+		}
+
+		public int GetPayTypeStr(string value){
+			if(value == ""){
+				return 0;
+			}
+			if(PayType.ContainsValue(value)){
+				foreach(DictionaryEntry d in PayType){
+					if(d.Value.ToString() == value){
+						return int.Parse(d.Key.ToString());
+					}
+				}
+			}
+			return -1;
+		}
     }
 }

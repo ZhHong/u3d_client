@@ -108,6 +108,7 @@ public class LoginAction : MonoBehaviour {
             if (ErrorString =="")
             {
                 t.text = "";
+				return;
             }
             GameWorld.getInstance().errorData.SetErrorData(ErrorString);
             t.text = GameWorld.getInstance().errorData.GetErrorString();

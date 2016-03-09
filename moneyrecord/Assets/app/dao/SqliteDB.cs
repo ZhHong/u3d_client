@@ -83,7 +83,7 @@ namespace app.dao
         {
             //do sql
             reader = null;
-            dbCommand = dbConnection.CreateCommand();
+			dbCommand = dbConnection.CreateCommand();
             dbCommand.CommandText = sqlQuery;
 			if (needReturn) {
 				reader = dbCommand.ExecuteReader ();
@@ -109,8 +109,6 @@ namespace app.dao
 						return 1;	
 					}
 				}
-
-
             }
             return -1;
         }
@@ -121,7 +119,6 @@ namespace app.dao
 			int reg_time = utils.Utils.GetNowTime();
             string sql = "insert into user_info values(null,'" + username + "','" + password + "'," + reg_time + ")";
             reader = ExecuteQuery(sql);
-            
 			return 1;
         }
 
@@ -133,6 +130,7 @@ namespace app.dao
 			} else {
 				return "SUCCESS";
 			}
+
 		}
 
 		public int InsertMoneyRecord(int uid, int record_time, int money_class, int pay_type, float pay_value, string msg){
@@ -147,19 +145,24 @@ namespace app.dao
 		public Hashtable GetCurrentMoneyRecord(int uid){
             //get current user money record
             Hashtable ResultSet = new Hashtable();
-			string sql = "select id,record_time,money_class,pay_type,pay_value,msg,insert_time from money_record where uid = "+uid;
+			string sql = "select id,record_year,record_month,record_day,money_class,pay_type,pay_value,msg,insert_time from money_record where uid = "+uid;
 			reader = ExecuteQuery (sql);
 			if (reader.HasRows) {
                 //has records
                 int i = 0;
 				while(reader.Read()){
 					int id = reader.GetInt32 (0);
-					int record_time = reader.GetInt32 (1);
-					int money_class = reader.GetInt32 (2);
-					int pay_type = reader.GetInt32 (3);
-					float pay_value = reader.GetFloat (4);
-					string msg = reader.GetString (5);
-					int insert_time = reader.GetInt32 (6);
+					int record_year = reader.GetInt32 (1);
+					int record_month = reader.GetInt32 (2);
+					int record_day = reader.GetInt32 (3);
+					int money_class = reader.GetInt32 (4);
+					int pay_type = reader.GetInt32 (5);
+					float pay_value = reader.GetFloat (6);
+					string msg = reader.GetString (7);
+					int insert_time = reader.GetInt32 (8);
+
+					string record_time = record_year + "/" + record_month + "/" + record_day;
+
                     Hashtable temp = new Hashtable();
                     temp[0] = id;
                     temp[1] = record_time;
@@ -172,9 +175,18 @@ namespace app.dao
                     i++;
 					Debug.Log ("load db record ======={"+id+","+record_time+","+money_class+","+pay_type+","+msg+","+insert_time+"}");
 				}
-
 			}
 			return ResultSet;
+		}
+
+		public void CreateNewRecord(int year,int month,int day,int mc,int py,double payValue,string noteMsg){
+			//create new record
+			int uid =User.Instance().GetUid();
+			int now = Utils.GetNowTime ();
+			//table {id,uid,record_year,record_month,record_day,money_class,pay_type,pay_value,msg,insert_time}
+			string sql = "insert into money_record values( null,"+uid+","+year+","+month+","+day+","+mc+","+py+","+payValue+",'"+noteMsg+"',"+now+")";
+			reader = ExecuteQuery (sql);
+			Debug.Log (" create new record affected "+reader.RecordsAffected +" records");
 		}
 
 		public int GetCountMonthData(){

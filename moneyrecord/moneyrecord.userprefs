@@ -1,20 +1,22 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\app\layer\TableLayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\app\dao\SqliteDB.cs">
     <Files>
+      <File FileName="Assets\app\actions\CreateRecordAction.cs" Line="65" Column="11" />
       <File FileName="Assets\app\actions\CreateAction.cs" Line="1" Column="1" />
-      <File FileName="Assets\app\utils\Utils.cs" Line="1" Column="1" />
-      <File FileName="Assets\app\actions\LoginAction.cs" Line="1" Column="1" />
-      <File FileName="Assets\app\layer\TableLayer.cs" Line="27" Column="133" />
-      <File FileName="Assets\app\dao\SqliteDB.cs" Line="1" Column="1" />
-      <File FileName="Assets\app\manager\GameWorld.cs" Line="1" Column="1" />
+      <File FileName="Assets\app\utils\Utils.cs" Line="29" Column="4" />
+      <File FileName="Assets\app\actions\LoginAction.cs" Line="119" Column="5" />
+      <File FileName="Assets\app\layer\TableLayer.cs" Line="27" Column="28" />
+      <File FileName="Assets\app\dao\SqliteDB.cs" Line="189" Column="82" />
+      <File FileName="Assets\app\manager\GameWorld.cs" Line="205" Column="78" />
       <File FileName="Assets\Plugins\LocalData_Trans.cs" Line="1" Column="1" />
       <File FileName="Assets\app\service\LoginService.cs" Line="1" Column="1" />
-      <File FileName="Assets\app\layer\MsgLayer.cs" Line="32" Column="19" />
+      <File FileName="Assets\app\layer\MsgLayer.cs" Line="1" Column="1" />
       <File FileName="Assets\app\service\CreateService.cs" Line="1" Column="1" />
-      <File FileName="Assets\app\actions\DetailAction.cs" Line="36" Column="31" />
+      <File FileName="Assets\app\actions\DetailAction.cs" Line="1" Column="1" />
       <File FileName="Assets\app\model\User.cs" Line="1" Column="1" />
       <File FileName="Assets\app\model\MoneyRecord.cs" Line="1" Column="1" />
+      <File FileName="Assets\app\proto\ErrorData.cs" Line="110" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

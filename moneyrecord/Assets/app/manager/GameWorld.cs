@@ -201,6 +201,11 @@ namespace app.manager
             MoneyRecord.Instance().InitRecordFromDB(
             sqldb.GetCurrentMoneyRecord(User.Instance().GetUid()));
 		}
+
+		public void CreateNewRecord(int year,int month,int day,int mc,int py,double payValue,string noteMsg){
+			//create new record
+			sqldb.CreateNewRecord(year,month,day,mc,py,payValue,noteMsg);
+		}
 		
     }
 }
