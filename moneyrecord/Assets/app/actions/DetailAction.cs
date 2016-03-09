@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using app.manager;
 using app.service;
 using app.layer;
@@ -17,16 +18,20 @@ public class DetailAction : MonoBehaviour {
 	
 	}
 
+    public void OnApplicationQuit()
+    {
+        GameWorld.getInstance().GameWorldDestroy();
+    }
+
     public void OnBtnClick() {
         //click will create table view all the time
         GameObject ifhas=GameObject.Find("TableLayer");
         if (ifhas != null) {
             return;
         }
-        GameObject tbl = new GameObject("TableLayer");
-        TableLayer tablay = tbl.AddComponent<TableLayer>();
-        tablay.CreateTableView(app.model.MoneyRecord.Instance().GetRecordData());
-        tablay.Show();
+        GameObject tbl = GameObject.Find("TableView");
+        GridLayoutGroup gg= tbl.GetComponent<GridLayoutGroup>();
+        
     }
 
     public void OnCreateNewClick() {

@@ -53,8 +53,9 @@ namespace app.manager
             return instance;
         }
 
-		public static void GameWorldDestroy()
+		public void GameWorldDestroy()
 		{
+            Debug.Log("=========destroy game world");
             //destroy the game world
             if (sqldb != null) {
                 sqldb.CloseSqlConnection();

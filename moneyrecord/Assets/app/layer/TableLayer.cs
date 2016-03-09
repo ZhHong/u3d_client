@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using LitJson;
+using UnityEngine.UI;
 
 public class TableLayer : MonoBehaviour {
     //example http://blog.csdn.net/aisajiajiao/article/details/17472503
@@ -45,7 +46,9 @@ public class TableLayer : MonoBehaviour {
             GUI.Label(new Rect(Screen.width/8,Screen.height/8,Screen.width/4,Screen.height/4),"没有记录！",gsl);
             return;
         }
-		//GUI.contentColor = Color.red;
+        GameObject gbj = GameObject.Find("TableView");
+        ScrollRect sc = gbj.GetComponent<ScrollRect>();
+        //GUI.contentColor = Color.red;
         GUI.BeginGroup (new Rect (Screen.width/10,Screen.height/10,Screen.width*4/5,Screen.height*4/5));
         
 		srollPostion=GUI.BeginScrollView(new Rect(0, 0, Screen.width * 4 / 5, Screen.height * 4 / 5), srollPostion, new Rect(0, 0, labelWidth * colums, labelHeight * rows));

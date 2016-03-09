@@ -21,6 +21,12 @@ public class LoginAction : MonoBehaviour {
 		}
         UpdateButtonLoginState();
 	}
+
+    public void OnApplicationQuit()
+    {
+        GameWorld.getInstance().GameWorldDestroy();
+    }
+
     public void onLoginClick()
     {
         //check user

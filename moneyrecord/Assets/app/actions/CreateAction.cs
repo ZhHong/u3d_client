@@ -18,6 +18,11 @@ public class CreateAction : MonoBehaviour {
         SetCreateButtonState(false);
     }
 
+    public void OnApplicationQuit()
+    {
+        GameWorld.getInstance().GameWorldDestroy();
+    }
+
     void UpdateButonCreateState() {
         if (CheckUserNameState && CheckPasswordState && checkPasswordAgain)
         {
