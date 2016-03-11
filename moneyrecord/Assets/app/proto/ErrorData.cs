@@ -10,6 +10,9 @@ namespace app.proto
 
 		private Hashtable MoneyType = new Hashtable();
 		private Hashtable PayType = new Hashtable();
+        private Hashtable TableHead = new Hashtable();
+
+        private Hashtable textInpt = null;
         private ErrorData()
         {
             ErrorArry[0] = "未知错误!";
@@ -38,7 +41,20 @@ namespace app.proto
 			PayType [7] = "烟";
 			PayType [8] = "零食";
 			PayType [9] = "水果";
+            PayType[10] = "工资";
+            PayType[11] = "奖金";
+            PayType[12] = "其它";
 
+            TableHead["year"] = "年";
+            TableHead["month"] = "月";
+            TableHead["day"] = "日";
+            TableHead["datetime"] = "插入日期";
+            TableHead["money_class"] = "记录类别";
+            TableHead["pay_type"] = "支付类别";
+            TableHead["pay_value"] = "支付金额";
+            TableHead["msg"] = "备注信息";
+            TableHead["count_value"] = "总计";
+            TableHead["seq"] = "序号";
 
         }
 
@@ -113,5 +129,26 @@ namespace app.proto
 			}
 			return -1;
 		}
+
+        private string GetTableHeadStr(string index) {
+            if (TableHead.ContainsKey(index)) {
+                return TableHead[index].ToString();
+            }
+            return "";
+        }
+
+        public void PushTextTable(Hashtable t) {
+            textInpt = new Hashtable();
+            foreach (DictionaryEntry d in t) {
+                var index = d.Key.ToString();
+                var new_str=GetTableHeadStr(d.Value.ToString());
+                textInpt[index] = new_str;
+            }
+        }
+
+        public Hashtable GetTextTable()
+        {
+            return textInpt;
+        }
     }
 }

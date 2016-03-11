@@ -2,6 +2,7 @@
 using System.Collections;
 using LitJson;
 using UnityEngine.UI;
+using app.utils;
 
 public class TableLayer : MonoBehaviour {
     //example http://blog.csdn.net/aisajiajiao/article/details/17472503
@@ -29,14 +30,7 @@ public class TableLayer : MonoBehaviour {
 		int Headerwidth = MaxTableWidth/20;
 
 
-        Hashtable header = new Hashtable();
-        header["0"] = "序号";
-        header["1"] = "日期";
-        header["2"] = "记录类别";
-        header["3"] = "支付类型";
-        header["4"] = "支付值";
-        header["5"] = "备注";
-        header["6"] = "记录时间";
+        Hashtable header = app.manager.GameWorld.getInstance().errorData.GetTextTable();
         string jsdata = LitJson.JsonMapper.ToJson(header);
 
         JsonData mydata = LitJson.JsonMapper.ToObject(jsdata);
@@ -55,7 +49,7 @@ public class TableLayer : MonoBehaviour {
         //GUI.contentColor = Color.red;
         GUI.BeginGroup (new Rect (MaxTableWidth/20,Screen.height/20,MaxTableWidth*9/10,Screen.height*9/10));
         
-		srollPostion=GUI.BeginScrollView(new Rect(0, 0, MaxTableWidth * 9 / 10, Screen.height * 9 / 10), srollPostion, new Rect(0, 0, labelWidth * colums, labelHeight * rows));
+		srollPostion=GUI.BeginScrollView(new Rect(0, 0, MaxTableWidth * 9 / 10, Screen.height * 9 / 10), srollPostion, new Rect(0, 0, labelWidth * colums+Headerwidth, labelHeight * rows));
         GUI.Button(new Rect(0,0,Headerwidth,labelHeight),"");
         for (int b=1;b<=colums;b++) {
             GUI.Button(new Rect(Headerwidth+(b-1)*labelWidth,0,labelWidth,labelHeight),(string)mydata[(b-1).ToString()]);
@@ -66,10 +60,9 @@ public class TableLayer : MonoBehaviour {
             Hashtable data_temp = (Hashtable)showData [i-1];
             for (int j = 1; j <=colums; j++)
             {
-				string str = (data_temp[j-1]).ToString();
-
+                string show_str = (data_temp[j - 1]).ToString();
 				//Debug.Log ("data["+i+"],["+j+"]===="+str);
-				GUI.Button(new Rect(Headerwidth + (labelWidth * (j-1)), 0 + (labelHeight * i), labelWidth, labelHeight), str);
+				GUI.Button(new Rect(Headerwidth + (labelWidth * (j-1)), 0 + (labelHeight * i), labelWidth, labelHeight), show_str);
             }
         }
         GUI.EndScrollView();

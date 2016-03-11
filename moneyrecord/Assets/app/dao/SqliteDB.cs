@@ -6,6 +6,7 @@ using System.Data;
 using app.utils;
 using LitJson;
 using app.model;
+using app.manager;
 
 namespace app.dao
 {
@@ -148,7 +149,21 @@ namespace app.dao
             //get current user money record
 			getDbData = new Hashtable();
 			string sql = "select id,record_year,record_month,record_day,money_class,pay_type,pay_value,msg,insert_time from money_record where uid = "+uid;
-			reader = ExecuteQuery (sql);
+
+            Hashtable tablehead = new Hashtable();
+            tablehead[0] = "seq";
+            tablehead[1] = "year";
+            tablehead[2] = "month";
+            tablehead[3] = "day";
+            tablehead[4] = "money_class";
+            tablehead[5] = "pay_type";
+            tablehead[6] = "pay_value";
+            tablehead[7] = "msg";
+            tablehead[8] = "datetime";
+
+            GameWorld.getInstance().errorData.PushTextTable(tablehead);
+
+            reader = ExecuteQuery (sql);
 			if (reader.HasRows) {
                 //has records
                 int i = 0;
@@ -158,21 +173,25 @@ namespace app.dao
 					int record_month = reader.GetInt32 (2);
 					int record_day = reader.GetInt32 (3);
 					int money_class = reader.GetInt32 (4);
+
+                    string money_class_str = GameWorld.getInstance().errorData.GetMoneyTypeStr(money_class);
+
 					int pay_type = reader.GetInt32 (5);
+                    string pay_type_str = GameWorld.getInstance().errorData.GetPayTypeStr(pay_type);
 					float pay_value = reader.GetFloat (6);
 					string msg = reader.GetString (7);
 					int insert_time = reader.GetInt32 (8);
-
+                    string insert_time_str = Utils.GetTimeStr(insert_time).ToString();
 					string record_time = record_year + "/" + record_month + "/" + record_day;
 
                     Hashtable temp = new Hashtable();
                     temp[0] = id;
                     temp[1] = record_time;
-                    temp[2] = money_class;
-                    temp[3] = pay_type;
+                    temp[2] = money_class_str;
+                    temp[3] = pay_type_str;
                     temp[4] = pay_value;
                     temp[5] = msg;
-                    temp[6] = insert_time;
+                    temp[6] = insert_time_str;
 					getDbData.Add(i, temp);
                     i++;
 				}
@@ -204,7 +223,16 @@ namespace app.dao
 			//get year count
 			getDbData = new Hashtable();
 			string sql = "SELECT record_year,record_month,money_class,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,record_month ORDER BY record_year,record_month";
-			reader = ExecuteQuery (sql);
+
+            Hashtable tablehead = new Hashtable();
+            tablehead[0] = "year";
+            tablehead[1] = "month";
+            tablehead[2] = "money_class";
+            tablehead[3] = "count_value";
+
+            GameWorld.getInstance().errorData.PushTextTable(tablehead);
+
+            reader = ExecuteQuery (sql);
 			if (reader.HasRows){
 				int i = 0;
 				while(reader.Read()){
@@ -212,10 +240,11 @@ namespace app.dao
 					int year = reader.GetInt32(0);
 					int month = reader.GetInt32 (1);
 					int money_class = reader.GetInt32 (2);
-					float sum_pay = reader.GetFloat (3);
+                    string money_class_str = GameWorld.getInstance().errorData.GetMoneyTypeStr(money_class);
+                    float sum_pay = reader.GetFloat (3);
 					temp[0]=year;
 					temp [1] = month;
-					temp [2] = money_class;
+					temp [2] = money_class_str;
 					temp [3] = sum_pay;
 					getDbData.Add (i, temp);
 					i++;
@@ -228,7 +257,17 @@ namespace app.dao
 			//get month count
 			getDbData = new Hashtable();
 			string sql = "SELECT record_year,record_month,money_class,pay_type,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,record_month,pay_type ORDER BY record_year,record_month,pay_type";
-			reader = ExecuteQuery (sql);
+
+            Hashtable tablehead = new Hashtable();
+            tablehead[0] = "year";
+            tablehead[1] = "month";
+            tablehead[2] = "money_class";
+            tablehead[3] = "pay_type";
+            tablehead[4] = "count_value";
+
+            GameWorld.getInstance().errorData.PushTextTable(tablehead);
+
+            reader = ExecuteQuery (sql);
 			if (reader.HasRows){
 				int i = 0;
 				while(reader.Read()){
@@ -236,12 +275,14 @@ namespace app.dao
 					int year = reader.GetInt32 (0);
 					int month = reader.GetInt32 (1);
 					int money_class = reader.GetInt32 (2);
-					int pay_type = reader.GetInt32 (3);
-					float sum_pay = reader.GetFloat (4);
+                    string money_class_str = GameWorld.getInstance().errorData.GetMoneyTypeStr(money_class);
+                    int pay_type = reader.GetInt32 (3);
+                    string pay_type_str = GameWorld.getInstance().errorData.GetPayTypeStr(pay_type);
+                    float sum_pay = reader.GetFloat (4);
 					temp[0]=year;
 					temp [1] = month;
-					temp [2] = money_class;
-					temp [3] = pay_type;
+					temp [2] = money_class_str;
+					temp [3] = pay_type_str;
 					temp [4] = sum_pay;
 					getDbData.Add (i, temp);
 					i++;
@@ -254,18 +295,30 @@ namespace app.dao
 			//get year type count
 			getDbData = new Hashtable();
 			string sql = "SELECT record_year,money_class,pay_type,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,money_class,pay_type ORDER BY record_year,money_class,pay_type";
-			reader = ExecuteQuery (sql);
+
+            //set table head
+            Hashtable tablehead = new Hashtable();
+            tablehead[0] = "year";
+            tablehead[1] = "money_class";
+            tablehead[2] = "pay_type";
+            tablehead[3] = "count_value";
+
+            GameWorld.getInstance().errorData.PushTextTable(tablehead);
+
+            reader = ExecuteQuery (sql);
 			if (reader.HasRows){
 				int i = 0;
 				while(reader.Read()){
 					Hashtable temp = new Hashtable ();
 					int year = reader.GetInt32 (0);
 					int money_class = reader.GetInt32 (1);
-					int pay_type = reader.GetInt32 (2);
-					float sum_pay = reader.GetFloat (3);
+                    string money_class_str = GameWorld.getInstance().errorData.GetMoneyTypeStr(money_class);
+                    int pay_type = reader.GetInt32 (2);
+                    string pay_type_str = GameWorld.getInstance().errorData.GetPayTypeStr(pay_type);
+                    float sum_pay = reader.GetFloat (3);
 					temp [0] = year;
-					temp [1] = money_class;
-					temp [2] = pay_type;
+					temp [1] = money_class_str;
+					temp [2] = pay_type_str;
 					temp [3] = sum_pay;
 					getDbData.Add (i, temp);
 					i++;

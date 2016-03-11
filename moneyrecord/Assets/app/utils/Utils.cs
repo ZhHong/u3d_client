@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 namespace app.utils{
 	public class Utils{
@@ -24,8 +25,11 @@ namespace app.utils{
 			return 0;
 		}
 
-		public static void GetTimeStr (int time){
-			
+		public static DateTime GetTimeStr (int time){
+            DateTime dt = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970,1,1));
+            long itime = long.Parse(time+"0000000");
+            TimeSpan tt = new TimeSpan(itime);
+            return dt.Add(tt);
 		}
 	}
 }
