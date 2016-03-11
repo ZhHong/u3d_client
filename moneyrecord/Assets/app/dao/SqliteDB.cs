@@ -19,6 +19,8 @@ namespace app.dao
 
         private static SqliteDB instance = null;
 
+		private static Hashtable getDbData = null;
+
 		private SqliteDB( string db_file,string[] sqlstatement) {
 			//init sql database
 			OpenDB(db_file);
@@ -144,7 +146,7 @@ namespace app.dao
 
 		public Hashtable GetCurrentMoneyRecord(int uid){
             //get current user money record
-            Hashtable ResultSet = new Hashtable();
+			getDbData = new Hashtable();
 			string sql = "select id,record_year,record_month,record_day,money_class,pay_type,pay_value,msg,insert_time from money_record where uid = "+uid;
 			reader = ExecuteQuery (sql);
 			if (reader.HasRows) {
@@ -171,12 +173,11 @@ namespace app.dao
                     temp[4] = pay_value;
                     temp[5] = msg;
                     temp[6] = insert_time;
-                    ResultSet.Add(i, temp);
+					getDbData.Add(i, temp);
                     i++;
-					Debug.Log ("load db record ======={"+id+","+record_time+","+money_class+","+pay_type+","+msg+","+insert_time+"}");
 				}
 			}
-			return ResultSet;
+			return getDbData;
 		}
 
 		public void CreateNewRecord(int year,int month,int day,int mc,int py,double payValue,string noteMsg){
@@ -186,32 +187,115 @@ namespace app.dao
 			//table {id,uid,record_year,record_month,record_day,money_class,pay_type,pay_value,msg,insert_time}
 			string sql = "insert into money_record values( null,"+uid+","+year+","+month+","+day+","+mc+","+py+","+payValue+",'"+noteMsg+"',"+now+")";
 			reader = ExecuteQuery (sql);
-			Debug.Log (" create new record affected "+reader.RecordsAffected +" records");
 		}
 
-		public int GetCountMonthData(){
-			//get month count
-			return -1;
-		}
 
-		public int GetCountYearData(){
+		//--  year count
+		//SELECT record_year,record_month,money_class,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,record_month ORDER BY record_year,record_month;
+
+		//-- month count
+		//SELECT record_year,record_month,money_class,pay_type,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,record_month,pay_type ORDER BY record_year,record_month,pay_type;
+
+		//--classes count
+
+		//SELECT record_year,money_class,pay_type,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,money_class,pay_type ORDER BY record_year,money_class,pay_type;
+
+		public Hashtable GetCountYearData(){
 			//get year count
-			return -1;
+			getDbData = new Hashtable();
+			string sql = "SELECT record_year,record_month,money_class,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,record_month ORDER BY record_year,record_month";
+			reader = ExecuteQuery (sql);
+			if (reader.HasRows){
+				int i = 0;
+				while(reader.Read()){
+					Hashtable temp = new Hashtable ();
+					int year = reader.GetInt32(0);
+					int month = reader.GetInt32 (1);
+					int money_class = reader.GetInt32 (2);
+					float sum_pay = reader.GetFloat (3);
+					temp[0]=year;
+					temp [1] = month;
+					temp [2] = money_class;
+					temp [3] = sum_pay;
+					getDbData.Add (i, temp);
+					i++;
+				}
+			}
+			return getDbData;
 		}
 
-		public int GetCountMonthTypeData(){
-			//get month type count
-			return -1;
+		public Hashtable GetCountMonthData(){
+			//get month count
+			getDbData = new Hashtable();
+			string sql = "SELECT record_year,record_month,money_class,pay_type,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,record_month,pay_type ORDER BY record_year,record_month,pay_type";
+			reader = ExecuteQuery (sql);
+			if (reader.HasRows){
+				int i = 0;
+				while(reader.Read()){
+					Hashtable temp = new Hashtable ();
+					int year = reader.GetInt32 (0);
+					int month = reader.GetInt32 (1);
+					int money_class = reader.GetInt32 (2);
+					int pay_type = reader.GetInt32 (3);
+					float sum_pay = reader.GetFloat (4);
+					temp[0]=year;
+					temp [1] = month;
+					temp [2] = money_class;
+					temp [3] = pay_type;
+					temp [4] = sum_pay;
+					getDbData.Add (i, temp);
+					i++;
+				}
+			}
+			return getDbData;
 		}
 
-		public int GetCountYearTypeData(){
+		public Hashtable GetCountYearTypeData(){
 			//get year type count
-			return -1;
+			getDbData = new Hashtable();
+			string sql = "SELECT record_year,money_class,pay_type,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,money_class,pay_type ORDER BY record_year,money_class,pay_type";
+			reader = ExecuteQuery (sql);
+			if (reader.HasRows){
+				int i = 0;
+				while(reader.Read()){
+					Hashtable temp = new Hashtable ();
+					int year = reader.GetInt32 (0);
+					int money_class = reader.GetInt32 (1);
+					int pay_type = reader.GetInt32 (2);
+					float sum_pay = reader.GetFloat (3);
+					temp [0] = year;
+					temp [1] = money_class;
+					temp [2] = pay_type;
+					temp [3] = sum_pay;
+					getDbData.Add (i, temp);
+					i++;
+				}
+			}
+			return getDbData;
 		}
 
-		public int GetUserDefineData(string sql){
+		public Hashtable GetUserDefineData(string sql){
 			//get user self define data
-			return -1;
+			getDbData = new Hashtable();
+			reader = ExecuteQuery (sql);
+			if (reader.HasRows){
+				int i = 0;
+				while(reader.Read()){
+					i++;
+				}
+			}
+			return getDbData;
+		}
+
+		public Hashtable LoadCoutDataByCountType(int type){
+			if (type == 1) {
+				return GetCountYearData ();
+			} else if (type == 2) {
+				return GetCountMonthData ();
+			} else if (type == 3) {
+				return GetCountYearTypeData ();
+			}
+			return new Hashtable ();
 		}
     }
 }

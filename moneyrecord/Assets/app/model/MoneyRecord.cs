@@ -4,11 +4,12 @@ using app.model;
 namespace app.model{
 	public class MoneyRecord{
 		
-		private User user = null;
+		public User user = null;
 		private Hashtable records=null;
 		private static MoneyRecord record=null;
 
 		private MoneyRecord(){
+			user = User.Instance ();
 		}
 
 		public static MoneyRecord Instance(){

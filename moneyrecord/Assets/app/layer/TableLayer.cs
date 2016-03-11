@@ -5,17 +5,16 @@ using UnityEngine.UI;
 
 public class TableLayer : MonoBehaviour {
     //example http://blog.csdn.net/aisajiajiao/article/details/17472503
-    private static bool showTable = false;
+    private static int showTable = 0;
 
     private Vector2 srollPostion = Vector2.zero;
     private int rows = 0;
     private int colums = 0;
-	private int labelWidth = Screen.width/5;
-	private int labelHeight = Screen.height/20;
+
 	private Hashtable showData = null;
 
-    private int HeaderHeight = 0;
-    private int Headerwidth = Screen.width/20;
+    
+	private int MaxTableWidth =0;
 
 	void OnGUI(){
         //update all times
@@ -23,6 +22,13 @@ public class TableLayer : MonoBehaviour {
         //use data colums rows
         //use data length max to decided the label lenth
         //
+
+		int labelWidth = MaxTableWidth/6;
+		int labelHeight = Screen.height/20;
+		int HeaderHeight = 0;
+		int Headerwidth = MaxTableWidth/20;
+
+
         Hashtable header = new Hashtable();
         header["0"] = "序号";
         header["1"] = "日期";
@@ -35,23 +41,21 @@ public class TableLayer : MonoBehaviour {
 
         JsonData mydata = LitJson.JsonMapper.ToObject(jsdata);
 
-        if (!showTable){
+        if (showTable%2 ==0){
 			return;
 		}
         if (showData == null | showData.Count ==0) {
             GUI.contentColor = Color.red;
             GUIStyle gsl = new GUIStyle();
-            gsl.fontSize = Screen.width / 32;
+            gsl.fontSize = MaxTableWidth / 32;
             gsl.alignment= TextAnchor.MiddleCenter;
-            GUI.Label(new Rect(Screen.width/8,Screen.height/8,Screen.width/4,Screen.height/4),"没有记录！",gsl);
+            GUI.Label(new Rect(MaxTableWidth/8,Screen.height/8,MaxTableWidth/4,Screen.height/4),"没有记录！",gsl);
             return;
         }
-        GameObject gbj = GameObject.Find("TableView");
-        ScrollRect sc = gbj.GetComponent<ScrollRect>();
         //GUI.contentColor = Color.red;
-        GUI.BeginGroup (new Rect (Screen.width/10,Screen.height/10,Screen.width*4/5,Screen.height*4/5));
+        GUI.BeginGroup (new Rect (MaxTableWidth/20,Screen.height/20,MaxTableWidth*9/10,Screen.height*9/10));
         
-		srollPostion=GUI.BeginScrollView(new Rect(0, 0, Screen.width * 4 / 5, Screen.height * 4 / 5), srollPostion, new Rect(0, 0, labelWidth * colums, labelHeight * rows));
+		srollPostion=GUI.BeginScrollView(new Rect(0, 0, MaxTableWidth * 9 / 10, Screen.height * 9 / 10), srollPostion, new Rect(0, 0, labelWidth * colums, labelHeight * rows));
         GUI.Button(new Rect(0,0,Headerwidth,labelHeight),"");
         for (int b=1;b<=colums;b++) {
             GUI.Button(new Rect(Headerwidth+(b-1)*labelWidth,0,labelWidth,labelHeight),(string)mydata[(b-1).ToString()]);
@@ -72,13 +76,14 @@ public class TableLayer : MonoBehaviour {
 		GUI.EndGroup ();
     }
 
-	public void CreateTableView(Hashtable data){
+	public void CreateTableView(Hashtable data ,int maxTableWidth){
         rows = data.Count;
 		foreach(DictionaryEntry hal in data)
         {
 			colums = ((Hashtable)hal.Value).Count;
         }
         showData = data;
+		MaxTableWidth = maxTableWidth;
     }
 
     public void UpdateTableData() {
@@ -86,6 +91,6 @@ public class TableLayer : MonoBehaviour {
     }
 
 	public void Show(){
-        showTable = true;
+        showTable +=1;
 	}
 }

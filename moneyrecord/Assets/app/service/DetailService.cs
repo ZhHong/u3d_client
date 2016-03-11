@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using app.manager;
+namespace app.service{
+public class DetailService{
 
-public class DetailService : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+		public static Hashtable LoadCountYearData(){
+			return GameWorld.getInstance ().CountDataFromDB (1);
+		}
+
+		public static Hashtable LoadCountMonthData(){
+			return GameWorld.getInstance ().CountDataFromDB (2);
+		}
+
+		public static Hashtable LoadCountClassesData(){
+			return GameWorld.getInstance ().CountDataFromDB (3);
+		}
 	}
 }

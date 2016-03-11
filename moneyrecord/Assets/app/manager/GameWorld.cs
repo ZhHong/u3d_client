@@ -55,7 +55,6 @@ namespace app.manager
 
 		public void GameWorldDestroy()
 		{
-            Debug.Log("=========destroy game world");
             //destroy the game world
             if (sqldb != null) {
                 sqldb.CloseSqlConnection();
@@ -131,13 +130,6 @@ namespace app.manager
 			TextAsset data = Resources.Load ("INITDB") as TextAsset;
 
             //string getDbInit = LocalData_Trans.GetData(dbInitPath,false);
-			if (data != null) {
-
-				Debug.Log (" type of data=========");
-			} else {
-				Debug.Log ("data is None================");
-			}
-			Debug.Log("data =============="+data.text);
 			string getDbInit = data.text;
             sqlStatement = getDbInit.Split('#');
 
@@ -206,6 +198,10 @@ namespace app.manager
 		public void CreateNewRecord(int year,int month,int day,int mc,int py,double payValue,string noteMsg){
 			//create new record
 			sqldb.CreateNewRecord(year,month,day,mc,py,payValue,noteMsg);
+		}
+
+		public Hashtable CountDataFromDB(int type){
+			return sqldb.LoadCoutDataByCountType (type);
 		}
 		
     }
