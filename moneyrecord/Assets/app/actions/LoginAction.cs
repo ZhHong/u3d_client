@@ -24,6 +24,14 @@ public class LoginAction : MonoBehaviour {
 		if (gameworld == null) {
 			gameworld = GameWorld.getInstance ();
 		}
+        GameObject ifhas = GameObject.Find("TextErrorLog");
+        if (ifhas != null)
+        {
+            Text msghas = ifhas.GetComponent<Text>();
+            string gamesave = Application.persistentDataPath + app.utils.Utils.GLOBAL_GAME_SAVE_PATH;
+            string db_file_location = Application.persistentDataPath + app.utils.Utils.GLOBAL_DB_FILE_PATH;
+            msghas.text = "初始化数据失败！\n" + gamesave+"\n"+db_file_location;
+        }
         UpdateButtonLoginState();
         SetRememberState();
     }
