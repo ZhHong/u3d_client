@@ -43,7 +43,7 @@ public class DetailAction : MonoBehaviour {
 
 		GameObject msgo = new GameObject ("AllReocrdView");
 		TableLayer tbl = msgo.AddComponent<TableLayer> ();
-		tbl.CreateTableView (app.model.MoneyRecord.Instance().GetRecordData(),maxTableWidth);
+		tbl.CreateTableView (DetailService.LoadALlRecord(), maxTableWidth);
 		tbl.Show ();
 		HideOther ("AllReocrdView");
         

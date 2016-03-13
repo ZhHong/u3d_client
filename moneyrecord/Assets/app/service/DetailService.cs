@@ -16,5 +16,10 @@ public class DetailService{
 		public static Hashtable LoadCountClassesData(){
 			return GameWorld.getInstance ().CountDataFromDB (3);
 		}
+
+        public static Hashtable LoadALlRecord()
+        {
+            return GameWorld.getInstance().LoadDefaultData();
+        }
 	}
 }

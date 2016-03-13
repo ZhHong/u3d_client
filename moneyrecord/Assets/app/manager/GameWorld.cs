@@ -28,6 +28,9 @@ namespace app.manager
 
         public ErrorData errorData = null;
 
+        private LitJson.JsonData gameSave = null;
+
+
         private GameWorld()
         {
             var action = initGameWorld();
@@ -59,6 +62,13 @@ namespace app.manager
             if (sqldb != null) {
                 sqldb.CloseSqlConnection();
             }
+            if (gameSave != null) {
+                string gamev=gameSave.ToJson();
+                string gamesave = Application.persistentDataPath + Utils.GLOBAL_GAME_SAVE_PATH;
+                Debug.Log("app over set replace game save=============================="+ gamev);
+                LocalData_Trans.SetData(gamesave, gamev);
+            }
+
 		}
 
 		public int getLoginState(){
@@ -84,8 +94,8 @@ namespace app.manager
         }
         private int initConfig(int _init_s)
         {
-			//write and read game save data
-			/*
+            //write and read game save data
+            /*
             string dirpath = Application.persistentDataPath + "/local";
             LocalData_Trans.CreateDirectory(dirpath);
 			string fileName = dirpath + Utils.GLOBAL_GAME_SAVE_PATH;
@@ -102,10 +112,36 @@ namespace app.manager
             Debug.Log("get jsdata ==============jsdata['name']===" + jsdata["name"]);
             //Hashtable get_tab = LitJson.JsonMapper.ToObject (data);
             //Debug.Log ("get tab name==============="+get_tab["name"]);
-			*
+			*/
 
-            //load/write secret config
-			/*
+            //load/write secret gamesave
+            //check gamesave file if exists
+            string gamesave = Application.persistentDataPath + Utils.GLOBAL_GAME_SAVE_PATH;
+            bool issaveExists =LocalData_Trans.IsFileExists(gamesave);
+
+            if (!issaveExists)
+            {
+                //write default gamesave
+                Hashtable default_config = new Hashtable();
+                default_config["re_name"] = "";
+                default_config["re_pass"] = "";
+                string jsonarry = LitJson.JsonMapper.ToJson(default_config);
+                LitJson.JsonData gv = LitJson.JsonMapper.ToObject(jsonarry);
+                Debug.Log("init default save========"+jsonarry);
+                LocalData_Trans.SetData(gamesave, jsonarry);
+                SetUserSaveDef(gv);
+            }
+            else
+            {
+                //get gamesave
+                string get_save = LocalData_Trans.GetData(gamesave);
+                Debug.Log("get game save ========"+get_save);
+                LitJson.JsonData game_str = LitJson.JsonMapper.ToObject(get_save);
+                SetUserSaveDef(game_str);
+
+            }
+
+            /*
 			string configpath = Application.dataPath + Utils.GLOBAL_CONFIG_PATH;
             Hashtable config_data = new Hashtable ();
             Hashtable info = new Hashtable ();
@@ -114,7 +150,6 @@ namespace app.manager
             config_data ["server1"] = info;
 
             string json_array_config = LitJson.JsonMapper.ToJson (config_data);
-            Debug.Log ("config json array================"+json_array);
             LocalData_Trans.SetData (configpath, json_array_config);
 
             string get_config = LocalData_Trans.GetData(configpath);
@@ -125,9 +160,9 @@ namespace app.manager
             Debug.Log(ss["host"]);
             */
 
-			//get and run db file
+            //get and run db file
             //string dbInitPath = Application.dataPath + Utils.GLOBAL_DBINIT_PATH;
-			TextAsset data = Resources.Load ("INITDB") as TextAsset;
+            TextAsset data = Resources.Load ("INITDB") as TextAsset;
 
             //string getDbInit = LocalData_Trans.GetData(dbInitPath,false);
 			string getDbInit = data.text;
@@ -190,9 +225,8 @@ namespace app.manager
 			sqldb.CreateUser (username, password);
 		}
 
-		public void LoadDefaultData(){
-            MoneyRecord.Instance().InitRecordFromDB(
-            sqldb.GetCurrentMoneyRecord(User.Instance().GetUid()));
+		public Hashtable LoadDefaultData(){
+            return sqldb.GetCurrentMoneyRecord(User.Instance().GetUid());
 		}
 
 		public void CreateNewRecord(int year,int month,int day,int mc,int py,double payValue,string noteMsg){
@@ -203,6 +237,20 @@ namespace app.manager
 		public Hashtable CountDataFromDB(int type){
 			return sqldb.LoadCoutDataByCountType (type);
 		}
-		
+
+        private void SetUserSaveDef(LitJson.JsonData js)
+        {
+            gameSave = js;
+        }
+
+        public void SetUserSaveDef(string savetype, string data) {
+            gameSave[savetype] = data;
+            Debug.Log(gameSave.ToJson()+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        }
+
+        public string GetUserSaveDef(string savetype)
+        {
+            return gameSave[savetype].ToString();
+        }
     }
 }

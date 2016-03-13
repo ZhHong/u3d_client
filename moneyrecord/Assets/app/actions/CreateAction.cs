@@ -32,11 +32,6 @@ public class CreateAction : MonoBehaviour {
         SetCreateButtonState(false);
     }
 
-	public void OnCreateClick(){
-        //loginscene call
-		GameWorld.getInstance().loadSceneWithoutLoading ("CreateNew");
-	}
-
     public void OnBackClick() {
         CreateService.ResetState();
         GameWorld.getInstance().loadSceneWithoutLoading("LoginScene");

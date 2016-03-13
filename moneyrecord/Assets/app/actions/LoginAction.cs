@@ -15,12 +15,60 @@ public class LoginAction : MonoBehaviour {
     private bool CheckUserName = false;
     private bool CheckUserPass = false;
 
+    private string RemeberUserName = "";
+    private string RemeberPassword = "";
+    private bool re_name = false;
+    private bool re_pass = false;
+
 	void Start(){
 		if (gameworld == null) {
 			gameworld = GameWorld.getInstance ();
 		}
         UpdateButtonLoginState();
-	}
+        SetRememberState();
+    }
+
+    private void SetRememberState() {
+        RemeberUserName = gameworld.GetUserSaveDef("re_name");
+        RemeberPassword = gameworld.GetUserSaveDef("re_pass");
+        if (RemeberUserName !="") {
+            CheckUserName = true;
+            GameObject gobj = GameObject.Find("ToggleRememberUserName");
+            if (gobj != null) {
+                Toggle tl = gobj.GetComponent<Toggle>();
+                if (tl != null) {
+                    tl.isOn = true;
+                    GameObject gobj2 = GameObject.Find("InputUsername");
+                    InputField ipt = gobj2.GetComponent<InputField>();
+                    ipt.text = RemeberUserName;
+                    SetUserName(RemeberUserName);
+                }
+            }
+        }
+        if (RemeberPassword != "" && RemeberUserName !="")
+        {
+            CheckUserPass = true;
+            GameObject gobj = GameObject.Find("ToggleRememberPassword");
+            if (gobj != null)
+            {
+                Toggle tl = gobj.GetComponent<Toggle>();
+                if (tl != null)
+                {
+                    tl.isOn = true;
+                    GameObject gobj2 = GameObject.Find("InputPassword");
+                    InputField ipt = gobj2.GetComponent<InputField>();
+                    ipt.text = RemeberPassword;
+                    SetPassword(RemeberPassword);
+
+                }
+            }
+        }
+    }
+
+    private void RemoveRememberState()
+    {
+
+    }
 
     public void OnApplicationQuit()
     {
@@ -30,46 +78,47 @@ public class LoginAction : MonoBehaviour {
     public void onLoginClick()
     {
         //check user
-        if (!(CheckUserName && CheckUserPass)) {
-            string showmsg = "Error";
-            if (_userName == "" | _password == "") {
-                showmsg += "user name and password can not be null";
-            }
-            else
+        if (!CheckUserName | !CheckUserPass) {
+            GameObject ifhas = GameObject.Find("TextLoginCheckField");
+            if (ifhas != null)
             {
-                showmsg += " user not exsits";
-            }
-
-            GameObject ifhas = GameObject.Find("LoginPreCheckFiled");
-            if (ifhas != null) {
-                MsgLayer msghas = ifhas.GetComponent<MsgLayer>();
-                msghas.Show(showmsg);
+                Text msghas = ifhas.GetComponent<Text>();
+                msghas.text = "用户名,密码不能为空！";
+                msghas.color = Color.red;
                 ResetInputTextField();
                 return;
             }
-
-            GameObject msglayer = new GameObject("LoginPreCheckFiled");
-            MsgLayer msg = msglayer.AddComponent<MsgLayer>();
-            msg.Show("showmsg");
-            ResetInputTextField();
-            return;
         }
         LoginService.Login(_userName,_password);
 		if (gameworld.getLoginState () != 1) {
-			Debug.Log ("login failed===============================");
-            GameObject ifhas = GameObject.Find("LoginDataBaseCheckFiled");
+            GameObject ifhas = GameObject.Find("TextLoginCheckField");
             if (ifhas != null)
             {
-                MsgLayer msghas = ifhas.GetComponent<MsgLayer>();
-                msghas.Show("Error");
+                Text msghas = ifhas.GetComponent<Text>();
+                msghas.text = "登录失败，用户名或密码错误！";
+                msghas.color = Color.red;
                 ResetInputTextField();
                 return;
             }
-            GameObject msglayer = new GameObject("LoginDataBaseCheckFiled");
-			MsgLayer msg = msglayer.AddComponent<MsgLayer>();
-            ResetInputTextField();
-            msg.Show ("Error");
 		} else {
+            if (re_name) {
+                RemeberUserName = _userName;
+                gameworld.SetUserSaveDef("re_name",RemeberUserName);
+            }
+            else
+            {
+                RemeberUserName = "";
+                gameworld.SetUserSaveDef("re_name", RemeberUserName);
+            }
+            if (re_pass) {
+                RemeberPassword = _password;
+                gameworld.SetUserSaveDef("re_pass", RemeberPassword);
+            }
+            else
+            {
+                RemeberPassword = "";
+                gameworld.SetUserSaveDef("re_pass", RemeberPassword);
+            }
             //reset data
             ResetInputTextField();
             //load database data
@@ -79,12 +128,21 @@ public class LoginAction : MonoBehaviour {
 
 	}
 
+    public void OnCreateClick()
+    {
+        //loginscene call
+        GameWorld.getInstance().loadSceneWithoutLoading("CreateNew");
+    }
+
     public void SetUserName(string userName)
     {
         bool canMatch = Regex.IsMatch(userName, "(^[a-zA-Z0-9]{6,16}$)|(^[\u4E00-\u9FA5]{2,8}$)");
         if (!canMatch) {
             SetComponetTextState("TextLoginUserNameError","USERNAME_NOT_FIT");
             return;
+        }
+        if (re_name) {
+            RemeberUserName = userName;
         }
         _userName = userName;
         CheckUserName = true;
@@ -99,12 +157,55 @@ public class LoginAction : MonoBehaviour {
             SetComponetTextState("TextLoginPasswordError", "USERPASSWORD_NOT_FIT");
             return;
         }
+        if (re_pass) {
+            RemeberPassword = password;
+        }
         _password = password;
         CheckUserPass = true;
         SetComponetTextState("TextLoginPasswordError", "");
         UpdateButtonLoginState();
     }
 
+    public void OnRememberUserName(bool state) {
+        if (state) {
+            re_name = true;
+        }
+        else
+        {
+            re_name = false;
+            re_pass = false;
+            GameObject gob = GameObject.Find("ToggleRememberPassword");
+            if (gob != null)
+            {
+                Toggle tl = gob.GetComponent<Toggle>();
+                if (tl != null)
+                {
+                    tl.isOn = false;
+                }
+            }
+            RemeberUserName = "";
+            RemeberPassword = "";
+        }
+    }
+
+    public void OnRememberPassWord(bool state) {
+        if (state) {
+            re_name = true;
+            re_pass = true;
+            GameObject gob = GameObject.Find("ToggleRememberUserName");
+            if (gob != null) {
+                Toggle tl = gob.GetComponent<Toggle>();
+                if (tl !=null) {
+                    tl.isOn = true;
+                }
+            }
+        }
+        else
+        {
+            re_pass = false;
+            RemeberPassword = "";
+        }
+    }
 
     private void SetComponetTextState(string ComponetName,string ErrorString="") {
         //set componet Text State
@@ -138,6 +239,7 @@ public class LoginAction : MonoBehaviour {
             InputField tp =inputpass.GetComponent<InputField>();
             tp.text = "";
         }
+        UpdateButtonLoginState();
     }
 
     private void ResetButtonLoginState(bool state) {

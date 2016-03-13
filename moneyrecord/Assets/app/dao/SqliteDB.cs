@@ -222,7 +222,7 @@ namespace app.dao
 		public Hashtable GetCountYearData(){
 			//get year count
 			getDbData = new Hashtable();
-			string sql = "SELECT record_year,record_month,money_class,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,record_month ORDER BY record_year,record_month";
+			string sql = "SELECT record_year,record_month,money_class,sum(pay_value) from money_record   WHERE uid = "+User.Instance().GetUid()+" GROUP BY record_year,record_month ORDER BY record_year,record_month";
 
             Hashtable tablehead = new Hashtable();
             tablehead[0] = "year";
@@ -256,7 +256,7 @@ namespace app.dao
 		public Hashtable GetCountMonthData(){
 			//get month count
 			getDbData = new Hashtable();
-			string sql = "SELECT record_year,record_month,money_class,pay_type,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,record_month,pay_type ORDER BY record_year,record_month,pay_type";
+			string sql = "SELECT record_year,record_month,money_class,pay_type,sum(pay_value) from money_record   WHERE uid = "+User.Instance().GetUid()+" GROUP BY record_year,record_month,pay_type ORDER BY record_year,record_month,pay_type";
 
             Hashtable tablehead = new Hashtable();
             tablehead[0] = "year";
@@ -294,7 +294,7 @@ namespace app.dao
 		public Hashtable GetCountYearTypeData(){
 			//get year type count
 			getDbData = new Hashtable();
-			string sql = "SELECT record_year,money_class,pay_type,sum(pay_value) from money_record   WHERE uid = 1 GROUP BY record_year,money_class,pay_type ORDER BY record_year,money_class,pay_type";
+			string sql = "SELECT record_year,money_class,pay_type,sum(pay_value) from money_record   WHERE uid = "+User.Instance().GetUid()+" GROUP BY record_year,money_class,pay_type ORDER BY record_year,money_class,pay_type";
 
             //set table head
             Hashtable tablehead = new Hashtable();
