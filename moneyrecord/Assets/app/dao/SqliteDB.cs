@@ -152,14 +152,12 @@ namespace app.dao
 
             Hashtable tablehead = new Hashtable();
             tablehead[0] = "seq";
-            tablehead[1] = "year";
-            tablehead[2] = "month";
-            tablehead[3] = "day";
-            tablehead[4] = "money_class";
-            tablehead[5] = "pay_type";
-            tablehead[6] = "pay_value";
-            tablehead[7] = "msg";
-            tablehead[8] = "datetime";
+            tablehead[1] = "record_time";
+            tablehead[2] = "money_class";
+            tablehead[3] = "pay_type";
+            tablehead[4] = "pay_value";
+            tablehead[5] = "msg";
+            tablehead[6] = "datetime";
 
             GameWorld.getInstance().errorData.PushTextTable(tablehead);
 
@@ -222,7 +220,7 @@ namespace app.dao
 		public Hashtable GetCountYearData(){
 			//get year count
 			getDbData = new Hashtable();
-			string sql = "SELECT record_year,record_month,money_class,sum(pay_value) from money_record   WHERE uid = "+User.Instance().GetUid()+" GROUP BY record_year,record_month ORDER BY record_year,record_month";
+			string sql = "SELECT record_year,record_month,money_class,sum(pay_value) from money_record   WHERE uid = "+User.Instance().GetUid()+" GROUP BY record_year,record_month,money_class ORDER BY record_year,record_month";
 
             Hashtable tablehead = new Hashtable();
             tablehead[0] = "year";

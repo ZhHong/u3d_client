@@ -55,6 +55,7 @@ namespace app.proto
             TableHead["msg"] = "备注信息";
             TableHead["count_value"] = "总计";
             TableHead["seq"] = "序号";
+            TableHead["record_time"] = "记账日期";
 
         }
 
