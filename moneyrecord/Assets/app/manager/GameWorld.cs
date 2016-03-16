@@ -62,14 +62,19 @@ namespace app.manager
             if (sqldb != null) {
                 sqldb.CloseSqlConnection();
             }
-            if (gameSave != null) {
-                string gamev=gameSave.ToJson();
-                string gamesave = Application.persistentDataPath + Utils.GLOBAL_GAME_SAVE_PATH;
-                Debug.Log("app over set replace game save=============================="+ gamev);
-                LocalData_Trans.SetData(gamesave, gamev);
-            }
+            ReplaceGameSave();
 
 		}
+
+        public void ReplaceGameSave() {
+            if (gameSave != null)
+            {
+                string gamev = gameSave.ToJson();
+                string gamesave = Application.persistentDataPath + Utils.GLOBAL_GAME_SAVE_PATH;
+                Debug.Log("app over set replace game save==============================" + gamev);
+                LocalData_Trans.SetData(gamesave, gamev);
+            }
+        }
 
 		public int getLoginState(){
             //login process

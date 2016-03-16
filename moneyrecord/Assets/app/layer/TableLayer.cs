@@ -51,6 +51,7 @@ public class TableLayer : MonoBehaviour {
         
 		srollPostion=GUI.BeginScrollView(new Rect(0, 0, MaxTableWidth * 9 / 10, Screen.height * 9 / 10), srollPostion, new Rect(0, 0, labelWidth * colums+Headerwidth, labelHeight * rows));
         GUI.Button(new Rect(0,0,Headerwidth,labelHeight),"");
+        GUI.skin.button.fontSize = labelHeight * 1 / 2;
         for (int b=1;b<=colums;b++) {
             GUI.Button(new Rect(Headerwidth+(b-1)*labelWidth,0,labelWidth,labelHeight),(string)mydata[(b-1).ToString()]);
         }

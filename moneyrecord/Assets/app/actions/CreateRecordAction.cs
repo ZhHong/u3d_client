@@ -218,17 +218,56 @@ public class CreateRecordAction : MonoBehaviour
     private void CheckCanCreate()
     {
         //check if can create new record
-        if (year == 0)
-        {
-            year = 2016;
+        //if (year == 0)
+        //{
+        //    year = 2016;
+        //}
+        //if (month == 0)
+        //{
+        //    month = 1;
+        //}
+        //if (day == 0)
+        //{
+        //    day = 1;
+        //}
+        if (year ==0) {
+            GameObject gobj = GameObject.Find("DropdownTimeYear");
+            if (gobj !=null) {
+                Dropdown dpd = gobj.GetComponent<Dropdown>();
+                year = int.Parse(dpd.captionText.text);
+            }
         }
-        if (month == 0)
-        {
-            month = 1;
+        if (month ==0) {
+            GameObject gobj = GameObject.Find("DropdownTimeMonth");
+            if (gobj != null)
+            {
+                Dropdown dpd = gobj.GetComponent<Dropdown>();
+                month = int.Parse(dpd.captionText.text);
+            }
         }
-        if (day == 0)
-        {
-            day = 1;
+        if (day ==0) {
+            GameObject gobj = GameObject.Find("DropdownTimeDay");
+            if (gobj != null)
+            {
+                Dropdown dpd = gobj.GetComponent<Dropdown>();
+                day = int.Parse(dpd.captionText.text);
+            }
+        }
+        if (moneyClass =="") {
+            GameObject gobj = GameObject.Find("DropdownMoneyClass");
+            if (gobj != null)
+            {
+                Dropdown dpd = gobj.GetComponent<Dropdown>();
+                moneyClass = dpd.captionText.text;
+            }
+        }
+        if (payType =="") {
+            GameObject gobj = GameObject.Find("DropdownPayType");
+            if (gobj != null)
+            {
+                Dropdown dpd = gobj.GetComponent<Dropdown>();
+                payType = dpd.captionText.text;
+            }
         }
     }
 

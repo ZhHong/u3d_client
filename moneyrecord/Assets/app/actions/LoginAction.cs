@@ -127,6 +127,7 @@ public class LoginAction : MonoBehaviour {
                 RemeberPassword = "";
                 gameworld.SetUserSaveDef("re_pass", RemeberPassword);
             }
+            GameWorld.getInstance().ReplaceGameSave();
             //reset data
             ResetInputTextField();
             //load database data
