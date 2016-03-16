@@ -60,9 +60,11 @@ public sealed class LFL_NetWork{
 		}
 		catch(ArgumentNullException e){
 			Debug.Log ("ArgumentNullException : "+e.ToString());
+            throw e;
 		}
 		catch(SocketException e){
 			Debug.Log ("SocketException : "+e.ToString());
+            throw e;
 		}
 	}
 	private void reciveMessageCallBack(IAsyncResult ar){
