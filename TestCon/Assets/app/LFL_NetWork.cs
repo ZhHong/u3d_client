@@ -59,11 +59,11 @@ public sealed class LFL_NetWork{
             
 		}
 		catch(ArgumentNullException e){
-			Debug.Log ("ArgumentNullException : "+e.ToString());
+			//Debug.Log ("ArgumentNullException : "+e.ToString());
             throw e;
 		}
 		catch(SocketException e){
-			Debug.Log ("SocketException : "+e.ToString());
+			//Debug.Log ("SocketException : "+e.ToString());
             throw e;
 		}
 	}

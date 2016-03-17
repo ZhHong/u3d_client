@@ -22,6 +22,9 @@ public class Main : MonoBehaviour {
         //init protocol
         protocol["0-0-s"] = "['String','String','String','String','Int','Int']";
         protocol["0-0-c"] = "['Byte','Int','Byte','Int']";
+
+		string str =Plugins.LocalData_Trans.LocalData_Trans.Encrypto("singularity","singularitysingularitysingularit");
+		Debug.Log ("========="+str);
 	}
 	
 	// Update is called once per frame
@@ -40,7 +43,7 @@ public class Main : MonoBehaviour {
 		if (GUI.Button (new Rect (690, 50, 160, 30), "SEND")) {
 			string str =  modelId + "-" + actionId + " data =" + msg;
 
-            string statc = "['538642', '1', '10002', '1', 99000000, 999999]";
+            string statc = "0,0,'538642', '1', '10002', '1', 99000000, 999999";
 
             AppendShowString(str);
 
