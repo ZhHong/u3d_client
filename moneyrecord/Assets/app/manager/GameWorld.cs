@@ -175,6 +175,10 @@ namespace app.manager
         public void CreateUser(string username,string password){
 			sqldb.CreateUser (username, password);
 		}
+
+		public void LoadDefaultData(){
+			sqldb.GetCurrentMoneyRecord (1);
+		}
 		
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using Mono.Data.Sqlite;
 using System;
 using System.Data;
+using app.utils;
 
 namespace app.dao
 {
@@ -96,17 +97,17 @@ namespace app.dao
             reader=ExecuteQuery(sql);
             if (reader.HasRows)
             {
-				reader.Read ();
-                string cryptopassword=reader.GetString(0);
-				int uid = reader.GetInt32(1);
-				int reg_time = reader.GetInt32(2);
+				if (reader.Read ()) {
+					string cryptopassword = reader.GetString (0);
+					int uid = reader.GetInt32 (1);
+					int reg_time = reader.GetInt32 (2);
 
-				if(cryptopassword == password)
-				{
-					return 1;	
+					Debug.Log("sql result===========cryptopassword="+cryptopassword+"==uid="+uid+"===reg_time=="+reg_time);
+					if (cryptopassword == password) {
+						return 1;	
+					}
 				}
 
-                Debug.Log("sql result===========cryptopassword="+cryptopassword+"==uid="+uid+"===reg_time=="+reg_time);
 
             }
             return -1;
@@ -130,6 +131,62 @@ namespace app.dao
 			} else {
 				return 1;
 			}
+		}
+
+		public int InsertMoneyRecord(int uid, int record_time, int money_class, int pay_type, float pay_value, string msg){
+			//insert into record
+			//table {id,uid,record_time,money_class,pay_type,pay_value,msg,insert_time}
+			int insert_time = Utils.GetNowTime();
+			string sql = "inset into money_record values(null,"+uid+","+record_time+","+money_class+","+pay_type+","+pay_value+",'"+msg+"',"+insert_time+")";
+			reader = ExecuteQuery (sql,false);
+			return -1;
+		}
+
+		public int GetCurrentMoneyRecord(int uid){
+			//get current user money record
+			string sql = "select id,record_time,money_class,pay_type,pay_value,msg,insert_time from money_record where uid = "+uid;
+			reader = ExecuteQuery (sql);
+			if (reader.HasRows) {
+				//has records
+				while(reader.Read()){
+					int id = reader.GetInt32 (0);
+					int record_time = reader.GetInt32 (1);
+					int money_class = reader.GetInt32 (2);
+					int pay_type = reader.GetInt32 (3);
+					float pay_value = reader.GetFloat (4);
+					string msg = reader.GetString (5);
+					int insert_time = reader.GetInt32 (6);
+					Debug.Log ("load db record ======={"+id+","+record_time+","+money_class+","+pay_type+","+msg+","+insert_time+"}");
+				}
+
+			}
+			// no record
+			return -1;
+		}
+
+		public int GetCountMonthData(){
+			//get month count
+			return -1;
+		}
+
+		public int GetCountYearData(){
+			//get year count
+			return -1;
+		}
+
+		public int GetCountMonthTypeData(){
+			//get month type count
+			return -1;
+		}
+
+		public int GetCountYearTypeData(){
+			//get year type count
+			return -1;
+		}
+
+		public int GetUserDefineData(string sql){
+			//get user self define data
+			return -1;
 		}
     }
 }

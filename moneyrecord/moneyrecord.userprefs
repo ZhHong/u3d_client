@@ -1,16 +1,19 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\app\utils\Utils.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\app\dao\SqliteDB.cs">
     <Files>
-      <File FileName="Assets\app\dao\SqliteDB.cs" Line="122" Column="13" />
-      <File FileName="Assets\app\manager\GameWorld.cs" Line="171" Column="42" />
-      <File FileName="Assets\app\actions\LoginAction.cs" Line="31" Column="3" />
+      <File FileName="Assets\app\utils\Utils.cs" Line="1" Column="1" />
+      <File FileName="Assets\app\dao\SqliteDB.cs" Line="143" Column="4" />
+      <File FileName="Assets\app\manager\GameWorld.cs" Line="180" Column="31" />
+      <File FileName="Assets\app\actions\LoginAction.cs" Line="31" Column="29" />
       <File FileName="Assets\app\actions\CreateAction.cs" Line="30" Column="44" />
-      <File FileName="Assets\app\utils\Utils.cs" Line="21" Column="10" />
-      <File FileName="Assets\Plugins\LocalData_Trans.cs" Line="45" Column="45" />
-      <File FileName="Assets\app\service\LoginService.cs" Line="12" Column="56" />
-      <File FileName="Assets\app\layer\MsgLayer.cs" Line="22" Column="4" />
-      <File FileName="Assets\app\service\CreateService.cs" Line="37" Column="24" />
+      <File FileName="Assets\Plugins\LocalData_Trans.cs" Line="1" Column="1" />
+      <File FileName="Assets\app\service\LoginService.cs" Line="1" Column="1" />
+      <File FileName="Assets\app\layer\MsgLayer.cs" Line="1" Column="1" />
+      <File FileName="Assets\app\service\CreateService.cs" Line="37" Column="1" />
+      <File FileName="Assets\app\actions\DetailAction.cs" Line="18" Column="2" />
+      <File FileName="Assets\app\model\User.cs" Line="34" Column="13" />
+      <File FileName="Assets\app\model\MoneyRecord.cs" Line="18" Column="18" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

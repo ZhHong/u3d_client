@@ -27,13 +27,15 @@ public class LoginAction : MonoBehaviour {
 			MsgLayer.Show ("error");
 		} else {
 			//load database data
+			gameworld.loadSceneWithoutLoading("DetailScene");
+			gameworld.LoadDefaultData ();
 		}
 
 	}
 
     public void SetUserName(string userName)
     {
-        bool canMatch = Regex.IsMatch(_userName, "(^[a-zA-Z0-9]{6,16}$)|(^[\u4E00-\u9FA5]{2,8}$)");
+        bool canMatch = Regex.IsMatch(userName, "(^[a-zA-Z0-9]{6,16}$)|(^[\u4E00-\u9FA5]{2,8}$)");
         if (!canMatch) {
             Debug.Log("user name can not pass the law");
         }
