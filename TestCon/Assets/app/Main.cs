@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Text;
 
 public class Main : MonoBehaviour {
 
@@ -44,6 +45,25 @@ public class Main : MonoBehaviour {
 			string str =  modelId + "-" + actionId + " data =" + msg;
 
             string statc = "0,0,'538642', '1', '10002', '1', 99000000, 999999";
+			Msg data = new Msg ();
+			data.Write (1);
+			//data.Write ('a');
+			//data.Write ((byte)1.1f);
+			//data.Write(11);
+			data.Write (2L);
+
+
+			byte[] b = data.Buffer;
+
+			bool a0 = data.ReadBoolean ();
+			//char a1 = (char)data.ReadByte ();
+			long a2 = data.ReadInt64 ();
+			//float a2 = float.Parse(data.ReadBytes (sizeof(float)));
+			Debug.Log ("=sum length=="+(sizeof(int)+sizeof(long))+"============byte array===" + data.Length);
+			Debug.Log ("=======a0=" + a0);
+			//Debug.Log ("=======a1=" + a1);
+			Debug.Log ("=======a2=" + a2);
+			//Debug.Log ("encode code==================="+code);
 
             AppendShowString(str);
 

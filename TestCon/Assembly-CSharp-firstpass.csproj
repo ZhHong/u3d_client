@@ -6,10 +6,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{5F7A4BF1-54E9-D9CB-12B6-3285822B71E1}</ProjectGuid>
+    <ProjectGuid>{5BF06CA6-3E66-3A79-9759-417D8AD99D4E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -45,21 +45,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\app\LFL_NetWork.cs" />
-     <Compile Include="Assets\app\LocalData_Trans.cs" />
-     <Compile Include="Assets\app\Main.cs" />
-     <Compile Include="Assets\app\Msg.cs" />
-     <Compile Include="Assets\app\Utils.cs" />
+     <Compile Include="Assets\Plugins\protocol\ErrorData.cs" />
+     <Compile Include="Assets\Plugins\protocol\sproto\SpCodec.cs" />
+     <Compile Include="Assets\Plugins\protocol\sproto\SpField.cs" />
+     <Compile Include="Assets\Plugins\protocol\sproto\SpObject.cs" />
+     <Compile Include="Assets\Plugins\protocol\sproto\SpPacker.cs" />
+     <Compile Include="Assets\Plugins\protocol\sproto\SpProtoParser.cs" />
+     <Compile Include="Assets\Plugins\protocol\sproto\SpProtocol.cs" />
+     <Compile Include="Assets\Plugins\protocol\sproto\SpRpc.cs" />
+     <Compile Include="Assets\Plugins\protocol\sproto\SpStream.cs" />
+     <Compile Include="Assets\Plugins\protocol\sproto\SpType.cs" />
+     <Compile Include="Assets\Plugins\protocol\sproto\SpTypeManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{5BF06CA6-3E66-3A79-9759-417D8AD99D4E}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

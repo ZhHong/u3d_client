@@ -9,10 +9,11 @@ using System.Net.Sockets;
 using System.Threading;
 
 public sealed class LFL_NetWork{
+	private const int MAX_LEN = 1024 * 50;
 	private static Socket sc;
     private bool isConnected = false;
     private static LFL_NetWork instance = null;
-    private byte[] receiveBuff = new byte[1024];
+	private byte[] receiveBuff = new byte[MAX_LEN];
 
     private LFL_NetWork() {
 
