@@ -33,8 +33,8 @@ public class TableLayer : MonoBehaviour {
 		int HeaderHeight = 0;
 		int Headerwidth = MaxTableWidth/20;
 		if (proview){
-			GUI.TextField (new Rect(MaxTableWidth/20,Screen.height/8,MaxTableWidth*9/10,labelHeight),proCommond);
-			if (GUI.Button (new Rect (MaxTableWidth / 20 + MaxTableWidth * 9 / 10, Screen.height / 8,labelWidth,labelHeight), "Excute")) {
+            proCommond=GUI.TextArea (new Rect(MaxTableWidth/20,Screen.height/8,MaxTableWidth*9/10,labelHeight),proCommond);
+			if (GUI.Button (new Rect (MaxTableWidth / 20 + MaxTableWidth * 9 / 10-labelWidth, Screen.height / 8+labelHeight,labelWidth,labelHeight), "Excute")) {
 				Debug.Log ("excute commond===================");
 			}
 			return;
