@@ -17,6 +17,10 @@ public class TableLayer : MonoBehaviour {
     
 	private int MaxTableWidth =0;
 
+	private bool proview = false;
+
+	private string proCommond ="";
+
 	void OnGUI(){
         //update all times
         //Todo
@@ -28,7 +32,13 @@ public class TableLayer : MonoBehaviour {
 		int labelHeight = Screen.height/20;
 		int HeaderHeight = 0;
 		int Headerwidth = MaxTableWidth/20;
-
+		if (proview){
+			GUI.TextField (new Rect(MaxTableWidth/20,Screen.height/8,MaxTableWidth*9/10,labelHeight),proCommond);
+			if (GUI.Button (new Rect (MaxTableWidth / 20 + MaxTableWidth * 9 / 10, Screen.height / 8,labelWidth,labelHeight), "Excute")) {
+				Debug.Log ("excute commond===================");
+			}
+			return;
+		}
 
         Hashtable header = app.manager.GameWorld.getInstance().errorData.GetTextTable();
         string jsdata = LitJson.JsonMapper.ToJson(header);
@@ -80,6 +90,11 @@ public class TableLayer : MonoBehaviour {
         showData = data;
 		MaxTableWidth = maxTableWidth;
     }
+
+	public void CreateProView(int maxTableWidth){
+		proview = true;
+		MaxTableWidth = maxTableWidth;
+	}
 
     public void UpdateTableData() {
 

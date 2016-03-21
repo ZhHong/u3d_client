@@ -137,6 +137,25 @@ public class DetailAction : MonoBehaviour {
 
 	public void OnProActionClick(){
 		//go to superadmin
+		GameObject ifhas = GameObject.Find("proview");
+		if(ifhas != null){
+			TableLayer has = ifhas.GetComponent<TableLayer> ();
+			has.Show ();
+			return;
+		}
+
+		int maxTableWidth = 0;
+		GameObject btnobj = GameObject.Find ("ButtonLogOut");
+		UnityEngine.RectTransform rt = btnobj.GetComponent<RectTransform> ();
+
+		Vector3 vecp = btnobj.transform.position;
+		maxTableWidth = (int)(vecp.x - rt.rect.width / 2);
+
+		GameObject msgo = new GameObject ("proview");
+		TableLayer tbl = msgo.AddComponent<TableLayer> ();
+		tbl.CreateProView (maxTableWidth);
+		tbl.Show ();
+		HideOther ("proview");
 	}
 
 	private void HideOther(string keepCompolent){
@@ -173,5 +192,12 @@ public class DetailAction : MonoBehaviour {
 				Destroy (ifhas1);
 			}
 		} 
+		if (keepCompolent != "proview") {
+			GameObject ifhas1 = GameObject.Find ("proview");
+			if(ifhas1 != null){
+				ifhas1.SetActive (false);
+				Destroy (ifhas1);
+			}
+		}
 	}
 }
