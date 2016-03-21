@@ -68,6 +68,7 @@ public class TableLayer : MonoBehaviour {
         }
         GUI.EndScrollView();
 		GUI.EndGroup ();
+		
     }
 
 	public void CreateTableView(Hashtable data ,int maxTableWidth){
