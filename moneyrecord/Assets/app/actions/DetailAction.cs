@@ -140,7 +140,7 @@ public class DetailAction : MonoBehaviour {
 		GameObject ifhas = GameObject.Find("proview");
 		if(ifhas != null){
 			TableLayer has = ifhas.GetComponent<TableLayer> ();
-			has.Show ();
+			has.ReShow ();
 			return;
 		}
 
@@ -154,7 +154,7 @@ public class DetailAction : MonoBehaviour {
 		GameObject msgo = new GameObject ("proview");
 		TableLayer tbl = msgo.AddComponent<TableLayer> ();
 		tbl.CreateProView (maxTableWidth);
-		tbl.Show ();
+		tbl.ReShow ();
 		HideOther ("proview");
 	}
 

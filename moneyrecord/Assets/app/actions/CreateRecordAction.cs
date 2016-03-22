@@ -19,13 +19,13 @@ public class CreateRecordAction : MonoBehaviour
     private double payValue = 0.0;
     private string noteMsg = "";
 
-    private bool CheckYear = false;
-    private bool CheckMonth = false;
-    private bool CheckDay = false;
-    private bool CheckClass = false;
-    private bool CheckType = false;
-    private bool CheckValue = false;
-    private bool CheckMsg = false;
+    //private bool CheckYear = false;
+    //private bool CheckMonth = false;
+    //private bool CheckDay = false;
+    //private bool CheckClass = false;
+    //private bool CheckType = false;
+    //private bool CheckValue = false;
+    //private bool CheckMsg = false;
 
     // Use this for initialization
     void Start()
@@ -285,13 +285,13 @@ public class CreateRecordAction : MonoBehaviour
         noteMsg = "";
 
 
-        CheckYear = false;
-        CheckMonth = false;
-        CheckDay = false;
-        CheckClass = false;
-        CheckType = false;
-        CheckValue = false;
-        CheckMsg = false;
+        //CheckYear = false;
+        //CheckMonth = false;
+        //CheckDay = false;
+        //CheckClass = false;
+        //CheckType = false;
+        //CheckValue = false;
+        //CheckMsg = false;
 
         GameObject gbj1 = GameObject.Find("InputFieldPayValue");
         GameObject gbj2 = GameObject.Find("InputFieldMsg");

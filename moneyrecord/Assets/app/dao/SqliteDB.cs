@@ -7,6 +7,7 @@ using app.utils;
 using LitJson;
 using app.model;
 using app.manager;
+using System.Text.RegularExpressions;
 
 namespace app.dao
 {
@@ -53,7 +54,7 @@ namespace app.dao
             {
                 dbConnection = new SqliteConnection(connectionStr);
                 dbConnection.Open();
-                Debug.Log("connection to db");
+                //Debug.Log("connection to db");
             }
             catch (Exception e)
             {
@@ -79,7 +80,7 @@ namespace app.dao
                 dbConnection.Close();
             }
             dbConnection = null;
-            Debug.Log("disconect from db");
+            //Debug.Log("disconect from db");
         }
 
 		public SqliteDataReader ExecuteQuery(string sqlQuery,bool needReturn=true)
@@ -326,15 +327,158 @@ namespace app.dao
 		}
 
 		public Hashtable GetUserDefineData(string sql){
+			//check sql if has *  if has we must checkout of the table struct
+
+			Hashtable tablehead = new Hashtable();
+
+			//get table
+			//select * from user where uid =0
+			//delete from user where uid=0
+			//update user set uname = 1 where uid =0
+			//SELECT record_year,record_month,money_class,pay_type,sum(pay_value) from money_record 
+			//WHERE uid = 1 GROUP BY record_year,record_month,pay_type ORDER BY record_year,record_month,pay_type;
+			if (sql.Contains ("select")) {
+				
+				if (sql.Contains ("*")) {
+					/*
+					//SELECT * from sqlite_master WHERE type =="table" AND name ="money_record";
+					string table_name = "";
+					var temp = sql.Split (new String[] {"from"},StringSplitOptions.RemoveEmptyEntries);
+					if (sql.Contains ("where")) {
+						var temp1 = temp [1].Split (new String[]{ "where" },StringSplitOptions.RemoveEmptyEntries);
+						table_name = temp1 [0];
+					} else {
+						table_name = temp [1];
+					}
+					// get table colums names
+					string sql_table = "select `sql` from sqlite_master where type = 'table' and name= '" + table_name + "'";
+					reader = ExecuteQuery (sql_table);
+					if (reader.Read()) {
+						string create_sql = reader.GetString (0);
+						var temp_cs = create_sql.Split (new char[]{'(',')'},StringSplitOptions.RemoveEmptyEntries);
+					}
+					*/
+					string table_name = "";
+					if(sql.Contains("money_record")){
+						table_name = "money_record";
+					}
+					if(sql.Contains("user_info")){
+						table_name = "user_info";
+					}
+					if (table_name != "") {
+						string[] sql_arr = GameWorld.getInstance ().getCreateSql ();
+						int length_a = sql_arr.Length;
+						for (int a = 0; a < length_a; a++) {
+							if (sql_arr [a].Contains (table_name)) {
+								var temp_cs = sql_arr [a].Split (new String[]{ table_name }, StringSplitOptions.RemoveEmptyEntries);
+								var create_struct = temp_cs [1].Split (',');
+								int length_b = create_struct.Length;
+								for (int b = 0; b < length_b; b++) {
+									tablehead [b] = create_struct [b];
+								}
+							}
+						}
+					} else {
+						for (int i =0 ; i <10;i++){
+							tablehead [i] = "colums-" + i;
+						}
+					}
+
+				} else {
+					var temp = sql.Split(new String[]{"select"},StringSplitOptions.RemoveEmptyEntries);
+					var temp1 = temp [0];
+					var temp2 = temp1.Split (new String[]{"from"},StringSplitOptions.RemoveEmptyEntries);
+					var temp3 = temp2 [0].Split (',');
+					int leng_t3 = temp3.Length;
+					for (int c=0;c<leng_t3;c++){
+						tablehead [c] = temp3 [c];
+					}
+				}
+			}else{
+				//update of delete
+				if (sql.Contains ("update")) {
+					reader = ExecuteQuery (sql);
+					throw new Exception ("update affected "+reader.RecordsAffected+" rows");
+
+				} else if(sql.Contains("delete")){
+					reader = ExecuteQuery (sql);
+					throw new Exception ("delete affected "+ reader.RecordsAffected +" rows");
+				}else if (sql.Contains("insert")){
+					//insert
+					Exception e= null;
+					try{
+						ExecuteQuery(sql,false);
+					}catch(Exception e1){
+						e = e1;
+						throw e;
+					}finally{
+						if (e == null) {
+							throw new Exception ("insert success!");
+						}
+					}
+
+				}else if (sql.Contains("create")){
+					//create
+					Exception e = null;
+					try{
+						ExecuteQuery(sql,false);
+					}catch(Exception e2){
+						e = e2;
+						throw e;
+					}finally{
+						if (e == null) {
+							throw new Exception ("create new table success!");
+						}
+					}
+				}else if (sql.Contains("drop")){
+					Exception e = null;
+					try{
+						ExecuteQuery(sql,false);
+					}catch(Exception e3){
+						e = e3;
+						throw e;
+					}finally{
+						if(e == null){
+							throw new Exception ("drop table success!");
+						}
+					}
+				}
+			}
+
+
 			//get user self define data
 			getDbData = new Hashtable();
+			//table head
+
 			reader = ExecuteQuery (sql);
 			if (reader.HasRows){
 				int i = 0;
 				while(reader.Read()){
+					Hashtable temp = new Hashtable ();
+					for (int j =0;j<reader.FieldCount;j++){
+						Type t =reader.GetFieldType (j);
+						if(t == typeof(Int32)){
+							var val = reader.GetInt32 (j);
+							temp [j] = val;
+						}
+						if (t == typeof(Int64)) {
+							var val = reader.GetInt64 (j);
+							temp [j] = val;
+						}
+						if (t == typeof(Double)) {
+							var val = reader.GetFloat (j);
+							temp [j] = val;
+						}
+						if (t == typeof(String)) {
+							var val = reader.GetString (j);
+							temp [j] = val; 
+						}
+					}
+					getDbData.Add (i, temp);
 					i++;
 				}
 			}
+			GameWorld.getInstance ().errorData.PushTextTable (tablehead);
 			return getDbData;
 		}
 

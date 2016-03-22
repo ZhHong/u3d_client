@@ -71,7 +71,7 @@ namespace app.manager
             {
                 string gamev = gameSave.ToJson();
                 string gamesave = Application.persistentDataPath + Utils.GLOBAL_GAME_SAVE_PATH;
-                Debug.Log("app over set replace game save==============================" + gamev);
+                //Debug.Log("app over set replace game save==============================" + gamev);
                 LocalData_Trans.SetData(gamesave, gamev);
             }
         }
@@ -250,12 +250,24 @@ namespace app.manager
 
         public void SetUserSaveDef(string savetype, string data) {
             gameSave[savetype] = data;
-            Debug.Log(gameSave.ToJson()+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            //Debug.Log(gameSave.ToJson()+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         }
 
         public string GetUserSaveDef(string savetype)
         {
             return gameSave[savetype].ToString();
         }
+
+		public Hashtable ExcuteManualSQl(string sql){
+			try{
+				return sqldb.GetUserDefineData (sql);
+			}catch(Exception e){
+				throw e;
+			}
+		}
+
+		public string [] getCreateSql(){
+			return sqlStatement;
+		}
     }
 }

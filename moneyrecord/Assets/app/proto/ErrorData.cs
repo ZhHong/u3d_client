@@ -135,7 +135,7 @@ namespace app.proto
             if (TableHead.ContainsKey(index)) {
                 return TableHead[index].ToString();
             }
-            return "";
+			return index;
         }
 
         public void PushTextTable(Hashtable t) {
