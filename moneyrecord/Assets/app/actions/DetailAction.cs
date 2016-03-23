@@ -158,6 +158,10 @@ public class DetailAction : MonoBehaviour {
 		HideOther ("proview");
 	}
 
+	public void OnServerClick(){
+		GameWorld.getInstance ().loadSceneWithoutLoading ("ServerScene");
+	}
+
 	private void HideOther(string keepCompolent){
 		if (keepCompolent != "CountClassesView") {
 			GameObject ifhas1 = GameObject.Find ("CountClassesView");

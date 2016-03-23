@@ -49,6 +49,7 @@
      <Compile Include="Assets\app\actions\CreateRecordAction.cs" />
      <Compile Include="Assets\app\actions\DetailAction.cs" />
      <Compile Include="Assets\app\actions\LoginAction.cs" />
+     <Compile Include="Assets\app\actions\ServerCon.cs" />
      <Compile Include="Assets\app\dao\SqliteDB.cs" />
      <Compile Include="Assets\app\event\MREventSys.cs" />
      <Compile Include="Assets\app\layer\ComboBox.cs" />
@@ -59,6 +60,7 @@
      <Compile Include="Assets\app\model\MoneyRecord.cs" />
      <Compile Include="Assets\app\model\SuperAdmin.cs" />
      <Compile Include="Assets\app\model\User.cs" />
+     <Compile Include="Assets\app\network\LFL_NetWork.cs" />
      <Compile Include="Assets\app\proto\ErrorData.cs" />
      <Compile Include="Assets\app\service\CreateRecordService.cs" />
      <Compile Include="Assets\app\service\CreateService.cs" />

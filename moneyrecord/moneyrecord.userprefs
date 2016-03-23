@@ -1,14 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\app\layer\TableLayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\app\actions\ServerCon.cs">
     <Files>
-      <File FileName="Assets\app\layer\TableLayer.cs" Line="104" Column="37" />
-      <File FileName="Assets\app\actions\DetailAction.cs" Line="1" Column="1" />
+      <File FileName="Assets\app\actions\ServerCon.cs" Line="71" Column="31" />
+      <File FileName="Assets\app\actions\DetailAction.cs" Line="162" Column="65" />
+      <File FileName="Assets\app\layer\TableLayer.cs" Line="97" Column="76" />
       <File FileName="Assets\app\service\DetailService.cs" Line="1" Column="1" />
       <File FileName="Assets\app\manager\GameWorld.cs" Line="1" Column="1" />
-      <File FileName="Assets\app\dao\SqliteDB.cs" Line="219" Column="177" />
+      <File FileName="Assets\app\dao\SqliteDB.cs" Line="1" Column="1" />
       <File FileName="Assets\app\proto\ErrorData.cs" Line="1" Column="1" />
       <File FileName="Assets\app\actions\CreateRecordAction.cs" Line="1" Column="1" />
+      <File FileName="Assets\app\network\LFL_NetWork.cs" Line="71" Column="13" />
+      <File FileName="Assets\Plugins\sproto\SpRpc.cs" Line="69" Column="65" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

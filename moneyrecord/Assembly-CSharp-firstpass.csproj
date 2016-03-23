@@ -55,6 +55,16 @@
      <Compile Include="Assets\Plugins\LitJson\Lexer.cs" />
      <Compile Include="Assets\Plugins\LitJson\ParserToken.cs" />
      <Compile Include="Assets\Plugins\LocalData_Trans.cs" />
+     <Compile Include="Assets\Plugins\sproto\SpCodec.cs" />
+     <Compile Include="Assets\Plugins\sproto\SpField.cs" />
+     <Compile Include="Assets\Plugins\sproto\SpObject.cs" />
+     <Compile Include="Assets\Plugins\sproto\SpPacker.cs" />
+     <Compile Include="Assets\Plugins\sproto\SpProtoParser.cs" />
+     <Compile Include="Assets\Plugins\sproto\SpProtocol.cs" />
+     <Compile Include="Assets\Plugins\sproto\SpRpc.cs" />
+     <Compile Include="Assets\Plugins\sproto\SpStream.cs" />
+     <Compile Include="Assets\Plugins\sproto\SpType.cs" />
+     <Compile Include="Assets\Plugins\sproto\SpTypeManager.cs" />
      <None Include="Assets\Resources\INITDB.txt" />
      <None Include="Assets\Resources\config.txt" />
  <Reference Include="UnityEngine.UI">

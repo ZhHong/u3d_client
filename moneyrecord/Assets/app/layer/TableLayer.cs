@@ -70,8 +70,8 @@ public class TableLayer : MonoBehaviour {
 			return;
 		}
 		//GUI.contentColor = Color.red;
-		GUI.BeginGroup (new Rect (MaxTableWidth/20,Screen.height/20,MaxTableWidth*9/10,Screen.height*9/10));
-		srollPostion=GUI.BeginScrollView(new Rect(0, 0, MaxTableWidth * 9 / 10, Screen.height * 9 / 10), srollPostion, new Rect(0, 0, labelWidth * colums+Headerwidth, labelHeight * rows));
+		GUI.BeginGroup (new Rect (MaxTableWidth/20,Screen.height/20,MaxTableWidth*9/10-labelHeight,Screen.height*9/10));
+		srollPostion=GUI.BeginScrollView(new Rect(0, 0, MaxTableWidth * 9 / 10-labelHeight, Screen.height * 9 / 10), srollPostion, new Rect(0, 0, labelWidth * colums+Headerwidth, labelHeight * rows));
 		GUI.Button(new Rect(0,0,Headerwidth,labelHeight),"");
 		GUI.skin.button.fontSize = labelHeight * 1 / 2;
 		for (int b=1;b<=colums;b++) {
@@ -91,10 +91,10 @@ public class TableLayer : MonoBehaviour {
 		GUI.EndScrollView();
 		GUI.EndGroup ();
 		GUI.skin.button.fontSize = labelHeight*3 / 4;
-		if (GUI.Button (new Rect (MaxTableWidth/20+MaxTableWidth*9/10, Screen.height*9/10-labelWidth/2, labelHeight, labelWidth/2), "↓")) {
+		if (GUI.Button (new Rect (MaxTableWidth/20+MaxTableWidth*9/10-labelHeight, Screen.height*9/10-labelWidth/2, labelHeight, labelWidth/2), "↓")) {
 			srollPostion.y += labelHeight;
 		}
-		if (GUI.Button (new Rect (MaxTableWidth/20+MaxTableWidth*9/10, Screen.height*9/10-labelWidth, labelHeight, labelWidth/2), "↑")) {
+		if (GUI.Button (new Rect (MaxTableWidth/20+MaxTableWidth*9/10-labelHeight, Screen.height*9/10-labelWidth, labelHeight, labelWidth/2), "↑")) {
 			srollPostion.y -= labelHeight;
 		}
 		if(GUI.Button(new Rect(MaxTableWidth/20+MaxTableWidth*9/10-labelWidth,Screen.height*9/10+labelHeight,labelWidth/2,labelHeight),"←")){
