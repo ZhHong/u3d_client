@@ -15,6 +15,8 @@ public class ServerCon : MonoBehaviour {
 
 	private Hashtable protocol = new Hashtable();
 
+    private Vector3 scrollPosition = Vector3.zero;
+
 	public void OnApplicationQuit(){
 		if(network !=null){
 			network.closeConnection ();
@@ -40,19 +42,22 @@ public class ServerCon : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		GUI.TextArea (new Rect (10, 10, 500, 400), show_str);
-		modelId =GUI.TextField (new Rect (520, 10, 80, 30), modelId);
-		actionId=GUI.TextField (new Rect (600, 10, 80, 30), actionId);
-		msg =GUI.TextField (new Rect (520, 50, 160, 30), msg);
-		if (GUI.Button (new Rect (690, 10, 160, 30), "ADD_STR")) {
+        int btnWidth = Screen.width / 8;
+        int btnHight = Screen.height /20;
 
+		GUI.TextArea (new Rect (Screen.width/20, Screen.height/20, Screen.width/2, Screen.height*2/3), show_str);
+		modelId =GUI.TextField (new Rect (Screen.width*11/20, Screen.height/20, btnWidth, btnHight), modelId);
+		actionId=GUI.TextField (new Rect (Screen.width*11/20+btnWidth, Screen.height/20, btnWidth, btnHight), actionId);
+		msg =GUI.TextField (new Rect (Screen.width * 11 / 20, Screen.height/20+btnHight, btnWidth*2, btnHight), msg);
+		if (GUI.Button (new Rect (Screen.width*11/20+2*btnWidth, Screen.height/20, btnWidth, btnHight), "清除记录")) {
+            show_str = "";
 		}
-		if (GUI.Button (new Rect (690, 50, 160, 30), "SEND")) {
+		if (GUI.Button (new Rect (Screen.width*11/20+2*btnWidth, Screen.height/20+btnHight, btnWidth, btnHight), "发送")) {
 			string str =  modelId + "-" + actionId + " data =" + msg;
 			AppendShowString(str);
 
 		}
-		if (GUI.Button(new Rect(690, 90, 160, 30), "connect")) {
+		if (GUI.Button(new Rect(Screen.width * 11 / 20 + 2 * btnWidth, Screen.height / 20 + btnHight*2, btnWidth, btnHight), "连接")) {
 			try { 
 				network.connectServer();
 				AppendShowString("connect to server");
@@ -61,7 +66,7 @@ public class ServerCon : MonoBehaviour {
 				AppendShowString(e.Message);
 			}
 		}
-		if (GUI.Button(new Rect(690,130,160,30),"disconnect")){
+		if (GUI.Button(new Rect(Screen.width * 11 / 20 + 2 * btnWidth, Screen.height / 20 + btnHight*3, btnWidth,btnHight),"断开连接")){
 			try
 			{
 				network.closeConnection();
@@ -72,8 +77,11 @@ public class ServerCon : MonoBehaviour {
 			}
 
 		}
+        if (GUI.Button(new Rect(Screen.width * 11 / 20 + 2 * btnWidth, Screen.height / 20 + btnHight * 4, btnWidth, btnHight), "返回")) {
+            app.manager.GameWorld.getInstance().loadSceneWithoutLoading("DetailScene");
+        }
 
-	}
+    }
 
 	private void AppendShowString(string str)
 	{
